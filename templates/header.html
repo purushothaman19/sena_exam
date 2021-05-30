@@ -1,0 +1,88 @@
+<!DOCTYPE HTML>
+
+<!--
+	Verti by HTML5 UP
+	html5up.net | @ajlkn
+	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
+-->
+
+<html>
+
+	<style>
+		.logo-img{
+			width: 15%;
+		}
+
+		#logo{
+			position: relative;
+			bottom: 2rem;
+		}
+		@media (max-width:980px) {
+			.logo-img{
+				width: 50%;
+			}
+		}
+	</style>
+
+	<head>
+		<title>SENA CAREER</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+		<link rel="stylesheet" href="/static/assets/css/main.css" />
+		<link rel="icon" type="image/png" href="static/assets/favicon1.ico" />
+
+	</head>
+
+	<body class="is-preload homepage">
+		<div id="page-wrapper">
+
+			<!-- Header -->
+				<div id="header-wrapper">
+					<header id="header" class="container">
+
+						<!-- Logo -->
+							<div id="logo">
+								<a href="{{ url_for('home') }}"><img class="logo-img" src="static/assets/images/LOGO.png" style="filter: hue-rotate(312deg);"></a>
+<!--								<span>welcome to Sena family</span>-->
+							</div>
+
+						<!-- Nav -->
+							<nav id="nav">
+								<ul>
+									<li class="current"><a href="/">Welcome</a></li>
+<!--									<li class="current"><a href="/">{{ current_user.name }}</a></li>-->
+
+<!--									<li>-->
+<!--										<a href="#">Dropdown</a>-->
+<!--										<ul>-->
+<!--											<li><a href="#">Lorem ipsum dolor</a></li>-->
+<!--											<li><a href="#">Magna phasellus</a></li>-->
+<!--											<li>-->
+<!--												<a href="#">Phasellus consequat</a>-->
+<!--												<ul>-->
+<!--													<li><a href="#">Lorem ipsum dolor</a></li>-->
+<!--													<li><a href="#">Phasellus consequat</a></li>-->
+<!--													<li><a href="#">Magna phasellus</a></li>-->
+<!--													<li><a href="#">Etiam dolore nisl</a></li>-->
+<!--												</ul>-->
+<!--											</li>-->
+<!--											<li><a href="#">Veroeros feugiat</a></li>-->
+<!--										</ul>-->
+<!--									</li>-->
+
+<!--									<li><a href="exam.html">Take </a></li>-->
+									{% if current_user.is_authenticated %}
+									<li><a href="{{ url_for('logout') }}">Log-Out</a></li>
+
+									{% else %}
+									<li><a href="{{ url_for('login') }}">Login</a></li>
+									<li><a href="{{ url_for('register') }}">Register</a></li>
+									<li><a href="{{ url_for('new_admission') }}">Admission</a></li>
+									{% endif %}
+									<li><a href="{{ url_for('change_password') }}">Change Password</a></li>
+
+								</ul>
+							</nav>
+
+					</header>
+				</div>

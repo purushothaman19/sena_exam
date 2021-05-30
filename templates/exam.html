@@ -1,0 +1,235 @@
+{% include "header.html" %}
+			<!-- Main -->
+<!--			<script type="text/javascript" src="http://code.jquery.com/jquery-latest.js"></script>-->
+<!--					<script type="text/javascript">-->
+
+<!--					var timePeriodInMs = 4000;-->
+
+<!--					setTimeout(function()-->
+<!--					{-->
+<!--						document.getElementById("main-wrapper").style.display = "none";-->
+<!--					},-->
+<!--					timePeriodInMs);-->
+<!--					</script>-->
+
+					<style>
+					#demo {
+					  text-align: center;
+					  font-size: 60px;
+					  margin-top: 0px;
+					  display: block;
+					}
+
+					#final{
+						display:none;
+						}
+
+					#main-wrapper{
+						display:none;
+						}
+					</style>
+
+					<script>
+
+					document.oncontextmenu = function() {
+							return false;
+						};
+
+					var countDownDate = new Date("May 31, 2021 13:00:00").getTime();
+					var openCountDownDate = new Date("May 31, 2021 10:00:00").getTime();
+
+					var x = setInterval(function() {
+
+					  var now = new Date().getTime();
+
+					  var distance = countDownDate - now;
+					  var openDistance = openCountDownDate - now;
+
+					  // closing time
+					  var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+					  var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+					  var seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+					  // opening time
+					  var openHours = Math.floor((openDistance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+					  var openMinutes = Math.floor((openDistance % (1000 * 60 * 60)) / (1000 * 60));
+					  var openSeconds = Math.floor((openDistance % (1000 * 60)) / 1000);
+
+					  if (hours <= 0 && minutes <= 0 && seconds <= 0 ) {
+						  clearInterval(x);
+						  document.getElementById("demo").style.display = "None";
+						  document.getElementById("main-wrapper").style.display = "None";
+						  document.getElementById("final").style.display = "block";
+						  }
+
+					  else if( openHours <= 0 && openMinutes <= 0 && openSeconds <= 0   ) {
+						document.getElementById("demo").innerHTML = hours + "h " + minutes + "m " + seconds + "s ";
+					  	document.getElementById("main-wrapper").style.display = "block";
+					  }
+
+					  else {
+						document.getElementById("demo").innerHTML = "Your exam will start in " + openHours + "h " + openMinutes + "m " + openSeconds + "s ";
+					  }
+					}, 1000);
+
+
+
+					</script>
+
+
+<!--					<script type="text/javascript">-->
+
+<!--						$(document).ready( function() {-->
+<!--							$('#final').delay(5000).fadeIn();-->
+<!--						});-->
+<!--						</script>-->
+				<div id="final">
+					<h3 style="text-align: center;">Hope you did well! Thank You!</h3>
+					<p style="text-align:center">Back to <a href="{{ url_for('home') }}">Home!</a></p>
+				</div>
+
+					<p style="font-size:1.5rem" id="demo"></p>
+
+				<div id="main-wrapper">
+					<div class="container">
+						<div class="row gtr-200">
+							<iframe src="https://drive.google.com/file/d/1rifZhnGAXpVXYL4yqyvsTIsjWhEmcGu7/preview" width="100%" height="1100rem" sandbox="allow-forms allow-pointer-lock allow-same-origin allow-scripts allow-top-navigation"></iframe>
+
+<!--https://drive.google.com/file/d/1FTYuyr-B_4q8r03DAKWgcIIJuN0LsZoF/preview-->
+<!--							<div class="col-4 col-12-medium">-->
+<!--								<div id="sidebar">-->
+
+<!--									&lt;!&ndash; Sidebar &ndash;&gt;-->
+<!--										<section>-->
+<!--											<h3>Subheading</h3>-->
+<!--											<p>Phasellus quam turpis, feugiat sit amet ornare in, hendrerit in lectus.-->
+<!--											Praesent semper mod quis eget mi. Etiam eu ante risus. Aliquam erat volutpat.-->
+<!--											Aliquam luctus et mattis lectus sit amet pulvinar. Nam turpis nisi-->
+<!--											consequat etiam.</p>-->
+<!--											<footer>-->
+<!--												<a href="#" class="button icon solid fa-info-circle">Find out more</a>-->
+<!--											</footer>-->
+<!--										</section>-->
+
+<!--										<section>-->
+<!--											<h3>Subheading</h3>-->
+<!--											<ul class="style2">-->
+<!--												<li><a href="#">Amet turpis, feugiat et sit amet</a></li>-->
+<!--												<li><a href="#">Ornare in hendrerit in lectus</a></li>-->
+<!--												<li><a href="#">Semper mod quis eget mi dolore</a></li>-->
+<!--												<li><a href="#">Quam turpis feugiat sit dolor</a></li>-->
+<!--												<li><a href="#">Amet ornare in hendrerit in lectus</a></li>-->
+<!--												<li><a href="#">Semper mod quisturpis nisi</a></li>-->
+<!--											</ul>-->
+<!--										</section>-->
+
+<!--								</div>-->
+<!--							</div>-->
+<!--							<div class="col-8 col-12-medium imp-medium">-->
+<!--								<div id="content">-->
+
+<!--									&lt;!&ndash; Content &ndash;&gt;-->
+<!--										<article>-->
+
+<!--											<h2>Left Sidebar</h2>-->
+
+<!--											<p>Phasellus quam turpis, feugiat sit amet ornare in, hendrerit in lectus.-->
+<!--											Praesent semper mod quis eget mi. Etiam eu ante risus. Aliquam erat volutpat.-->
+<!--											Aliquam luctus et mattis lectus sit amet pulvinar. Nam turpis nisi-->
+<!--											consequat etiam lorem ipsum dolor sit amet nullam.</p>-->
+
+<!--											<h3>More intriguing information</h3>-->
+<!--											<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas ac quam risus, at tempus-->
+<!--											justo. Sed dictum rutrum massa eu volutpat. Quisque vitae hendrerit sem. Pellentesque lorem felis,-->
+<!--											ultricies a bibendum id, bibendum sit amet nisl. Mauris et lorem quam. Maecenas rutrum imperdiet-->
+<!--											vulputate. Nulla quis nibh ipsum, sed egestas justo. Morbi ut ante mattis orci convallis tempor.-->
+<!--											Etiam a lacus a lacus pharetra porttitor quis accumsan odio. Sed vel euismod nisi. Etiam convallis-->
+<!--											rhoncus dui quis euismod. Maecenas lorem tellus, congue et condimentum ac, ullamcorper non sapien.-->
+<!--											Donec sagittis massa et leo semper a scelerisque metus faucibus. Morbi congue mattis mi.-->
+<!--											Phasellus sed nisl vitae risus tristique volutpat. Cras rutrum commodo luctus.</p>-->
+
+<!--											<p>Phasellus odio risus, faucibus et viverra vitae, eleifend ac purus. Praesent mattis, enim-->
+<!--											quis hendrerit porttitor, sapien tortor viverra magna, sit amet rhoncus nisl lacus nec arcu.-->
+<!--											Suspendisse laoreet metus ut metus imperdiet interdum aliquam justo tincidunt. Mauris dolor urna,-->
+<!--											fringilla vel malesuada ac, dignissim eu mi. Praesent mollis massa ac nulla pretium pretium.-->
+<!--											Maecenas tortor mauris, consectetur pellentesque dapibus eget, tincidunt vitae arcu.-->
+<!--											Vestibulum purus augue, tincidunt sit amet iaculis id, porta eu purus.</p>-->
+
+<!--										</article>-->
+
+<!--								</div>-->
+<!--							</div>-->
+
+						</div>
+					</div>
+				</div>
+
+			<!-- Footer -->
+<!--				<div id="footer-wrapper">-->
+<!--					<footer id="footer" class="container">-->
+<!--						<div class="row">-->
+<!--							<div class="col-3 col-6-medium col-12-small">-->
+
+<!--								&lt;!&ndash; Links &ndash;&gt;-->
+<!--									<section class="widget links">-->
+<!--										<h3>Random Stuff</h3>-->
+<!--										<ul class="style2">-->
+<!--											<li><a href="#">Etiam feugiat condimentum</a></li>-->
+<!--											<li><a href="#">Aliquam imperdiet suscipit odio</a></li>-->
+<!--											<li><a href="#">Sed porttitor cras in erat nec</a></li>-->
+<!--											<li><a href="#">Felis varius pellentesque potenti</a></li>-->
+<!--											<li><a href="#">Nullam scelerisque blandit leo</a></li>-->
+<!--										</ul>-->
+<!--									</section>-->
+
+<!--							</div>-->
+<!--							<div class="col-3 col-6-medium col-12-small">-->
+
+<!--								&lt;!&ndash; Links &ndash;&gt;-->
+<!--									<section class="widget links">-->
+<!--										<h3>Random Stuff</h3>-->
+<!--										<ul class="style2">-->
+<!--											<li><a href="#">Etiam feugiat condimentum</a></li>-->
+<!--											<li><a href="#">Aliquam imperdiet suscipit odio</a></li>-->
+<!--											<li><a href="#">Sed porttitor cras in erat nec</a></li>-->
+<!--											<li><a href="#">Felis varius pellentesque potenti</a></li>-->
+<!--											<li><a href="#">Nullam scelerisque blandit leo</a></li>-->
+<!--										</ul>-->
+<!--									</section>-->
+
+<!--							</div>-->
+<!--							<div class="col-3 col-6-medium col-12-small">-->
+
+<!--								&lt;!&ndash; Links &ndash;&gt;-->
+<!--									<section class="widget links">-->
+<!--										<h3>Random Stuff</h3>-->
+<!--										<ul class="style2">-->
+<!--											<li><a href="#">Etiam feugiat condimentum</a></li>-->
+<!--											<li><a href="#">Aliquam imperdiet suscipit odio</a></li>-->
+<!--											<li><a href="#">Sed porttitor cras in erat nec</a></li>-->
+<!--											<li><a href="#">Felis varius pellentesque potenti</a></li>-->
+<!--											<li><a href="#">Nullam scelerisque blandit leo</a></li>-->
+<!--										</ul>-->
+<!--									</section>-->
+
+<!--							</div>-->
+<!--							<div class="col-3 col-6-medium col-12-small">-->
+
+								<!-- Contact -->
+<!--									<section class="widget contact">-->
+<!--										<h3>Contact Us</h3>-->
+<!--										<ul>-->
+<!--											<li><a href="#" class="icon brands fa-twitter"><span class="label">Twitter</span></a></li>-->
+<!--											<li><a href="#" class="icon brands fa-facebook-f"><span class="label">Facebook</span></a></li>-->
+<!--											<li><a href="#" class="icon brands fa-instagram"><span class="label">Instagram</span></a></li>-->
+<!--											<li><a href="#" class="icon brands fa-dribbble"><span class="label">Dribbble</span></a></li>-->
+<!--											<li><a href="#" class="icon brands fa-pinterest"><span class="label">Pinterest</span></a></li>-->
+<!--										</ul>-->
+<!--										<p>1234 Fictional Road<br />-->
+<!--										Nashville, TN 00000<br />-->
+<!--										(800) 555-0000</p>-->
+<!--									</section>-->
+
+<!--							</div>-->
+<!--						</div>-->
+{% include 'footer.html' %}
