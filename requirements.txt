@@ -1,3 +1,5 @@
+gunicorn==20.1.0
+psycopg2-binary==2.8.6
 beautifulsoup4==4.9.3
 Bootstrap-Flask==1.5.1
 certifi==2020.6.20
@@ -16,7 +18,6 @@ Flask-LoginManager==1.1.6
 Flask-SQLAlchemy==2.4.4
 Flask-WTF==0.14.3
 greenlet==1.0.0
-gunicorn==20.1.0
 idna==2.10
 itsdangerous==1.1.0
 Jinja2==2.11.2
@@ -26,7 +27,6 @@ mp3play==0.1.15
 numpy==1.20.1
 panda==0.3.1
 pandas==1.2.2
-psycopg2-binary==2.8.6
 PyJWT==1.7.1
 pyperclip==1.8.2
 python-dateutil==2.8.1
