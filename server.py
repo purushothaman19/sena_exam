@@ -149,7 +149,7 @@ verified_emails = [mail.strip() for mail in student_mails.keys()]
 
 @app.route("/", methods=["GET", "POST"])
 def home():
-    return app.config['SQLALCHEMY_DATABASE_URI']
+    return app.config['SECRET_KEY']
     if request.args.get("fee"):
         name = request.args.get("name")
         bending = request.args.get("bending")
