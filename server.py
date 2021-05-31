@@ -75,8 +75,8 @@ class Admission(UserMixin, db.Model):
     email = db.Column(db.String(100), unique=True)
 
 
-# db.create_all()
-# db.session.commit()
+db.create_all()
+db.session.commit()
 
 # for i in range(1, 10):
 #     users = User.query.get(i)
