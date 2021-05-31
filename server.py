@@ -250,6 +250,7 @@ def login():
 
 
 @app.route("/exam")
+@login_required
 def exam():
     return render_template("exam.html")
 
