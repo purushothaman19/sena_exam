@@ -289,7 +289,7 @@ def new_admission():
                                     f"admission sign up on Sena site Here is details {request.form.get('name')},"
                                     f" {request.form.get('number')}, {request.form.get('email')}!")
 
-        # return redirect(url_for('home'))
+        return redirect(url_for('home'))
 
     return render_template("register.html", form=form, admission=True)
 
