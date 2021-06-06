@@ -184,14 +184,14 @@ def register():
 
             if request.form.get('email') in verified_emails:
 
-                # with smtplib.SMTP('smtp.gmail.com', 587) as connection:
-                #     connection.starttls()
-                #     connection.login(MY_EMAIL, MY_PASSWORD)
-                #     connection.sendmail(from_addr=MY_EMAIL,
-                #                         to_addrs=request.form.get('email'),
-                #                         msg=f"Subject:WELCOME TO SENA CAREER INSTITUTE\n\nWelcome "
-                #                             f"{request.form.get('name')}! Happy to see you with us."
-                #                             f" Thanks for supporting us! Keep rocking!".encode('utf-8'))
+                with smtplib.SMTP('smtp.gmail.com', 587) as connection:
+                    connection.starttls()
+                    connection.login(MY_EMAIL, MY_PASSWORD)
+                    connection.sendmail(from_addr=MY_EMAIL,
+                                        to_addrs=request.form.get('email'),
+                                        msg=f"Subject:WELCOME TO SENA CAREER INSTITUTE\n\nWelcome "
+                                            f"{request.form.get('name')}! Happy to see you with us."
+                                            f" Thanks for supporting us! Keep rocking!".encode('utf-8'))
 
                 db.session.add(new_user)
                 db.session.commit()
@@ -263,23 +263,23 @@ def new_admission():
 
         # verification_code = random.randint(2000, 10000)
 
-        # with smtplib.SMTP('smtp.gmail.com', 587) as connection:
-        #     connection.starttls()
-        #     connection.login(MY_EMAIL, MY_PASSWORD)
-        #     connection.sendmail(from_addr=MY_EMAIL,
-        #                         to_addrs=request.form.get('email'),
-        #                         msg=f"Subject:WELCOME TO SENA CAREER INSTITUTE\n\nWelcome {request.form.get('name')}!"
-        #                             f" Happy to see you with us. Thanks for supporting us! Keep rocking! "
-        #                             f"Here is our Educators' number: 8610642720".encode('utf-8'))
-        #
-        # with smtplib.SMTP('smtp.gmail.com', 587) as connection:
-        #     connection.starttls()
-        #     connection.login(MY_EMAIL, MY_PASSWORD)
-        #     connection.sendmail(from_addr=MY_EMAIL,
-        #                         to_addrs=MY_EMAIL,
-        #                         msg=f"Subject:NEW ADMISSION\n\n{request.form.get('name')} has made an "
-        #                             f"admission sign up on Sena site Here is details {request.form.get('name')},"
-        #                             f" {request.form.get('number')}, {request.form.get('email')}!")
+        with smtplib.SMTP('smtp.gmail.com', 587) as connection:
+            connection.starttls()
+            connection.login(MY_EMAIL, MY_PASSWORD)
+            connection.sendmail(from_addr=MY_EMAIL,
+                                to_addrs=request.form.get('email'),
+                                msg=f"Subject:WELCOME TO SENA CAREER INSTITUTE\n\nWelcome {request.form.get('name')}!"
+                                    f" Happy to see you with us. Thanks for supporting us! Keep rocking! "
+                                    f"Here is our Educators' number: 8610642720".encode('utf-8'))
+
+        with smtplib.SMTP('smtp.gmail.com', 587) as connection:
+            connection.starttls()
+            connection.login(MY_EMAIL, MY_PASSWORD)
+            connection.sendmail(from_addr=MY_EMAIL,
+                                to_addrs=MY_EMAIL,
+                                msg=f"Subject:NEW ADMISSION\n\n{request.form.get('name')} has made an "
+                                    f"admission sign up on Sena site Here is details {request.form.get('name')},"
+                                    f" {request.form.get('number')}, {request.form.get('email')}!")
 
         return redirect(url_for('home'))
 
