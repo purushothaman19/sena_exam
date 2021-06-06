@@ -78,13 +78,6 @@ class Admission(UserMixin, db.Model):
 db.create_all()
 db.session.commit()
 
-# for i in range(1, 10):
-#     users = User.query.get(i)
-#     print(users)
-#     db.session.delete(users)
-#     db.session.commit()
-
-
 class RegisterForm(FlaskForm):
     name = StringField('Name*', validators=[DataRequired()])
     email = EmailField('Email*', validators=[DataRequired(message='Enter a valid email-id')])
