@@ -249,12 +249,11 @@ def login():
     return render_template("login.html", form=form, errors=errors, msg=msg)
 
 
-@app.route("/exam")
+@app.route("/exam", methods=["GET", "POST"])
 def exam():
 
     exam_url = exam_sites[request.args.get("test_no")]
 
-    return exam_url
     return render_template("exam.html", url=exam_url)
 
 
