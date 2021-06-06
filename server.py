@@ -1,24 +1,15 @@
 import smtplib
 from flask import Flask, render_template, redirect, url_for, flash, request, abort
 from flask_bootstrap import Bootstrap
-from flask_ckeditor import CKEditor, CKEditorField
-from datetime import date
+from flask_ckeditor import CKEditor
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_sqlalchemy import SQLAlchemy
-from sqlalchemy.orm import relationship
 from flask_login import UserMixin, login_user, LoginManager, login_required, current_user, logout_user
-# from forms import CreatePostForm, LoginForm, CommentForm, RegisterForm
-from flask_gravatar import Gravatar
 from flask_wtf import FlaskForm
 from wtforms import StringField, SubmitField, PasswordField
 from wtforms.fields.html5 import EmailField
-from wtforms.validators import DataRequired, URL
-from sqlalchemy.orm import relationship
-from sqlalchemy import Column, String, Integer, PrimaryKeyConstraint, ForeignKey, create_engine, MetaData
+from wtforms.validators import DataRequired
 from functools import wraps
-from markupsafe import Markup
-from datetime import datetime
-import random
 import os
 import json
 
@@ -143,8 +134,12 @@ student_mails = {
 verified_emails = [mail.strip() for mail in student_mails.keys()]
 
 exam_sites = {
-                "13": "https://drive.google.com/file/d/1rifZhnGAXpVXYL4yqyvsTIsjWhEmcGu7/preview",
-                "14": "https://drive.google.com/file/d/1MlxFd6JY-W_piE2bklugYNMY6HGB-156/preview"
+                "13": ["https://drive.google.com/file/d/1rifZhnGAXpVXYL4yqyvsTIsjWhEmcGu7/preview",
+                       "May 31, 2021 10:00:00", "May 31, 2021 13:00:00"],
+
+                "14": ["https://drive.google.com/file/d/1MlxFd6JY-W_piE2bklugYNMY6HGB-156/preview",
+                       "June 07, 2021 10:00:00", "June 07, 2021 13:00:00"]
+
               }
 
 
@@ -253,9 +248,11 @@ def login():
 @app.route("/exam", methods=["GET", "POST"])
 def exam():
 
-    exam_url = exam_sites[request.args.get("test_no")]
+    exam_url = exam_sites[request.args.get("test_no")][0]
+    opentime = exam_sites[request.args.get("test_no")][1]
+    closetime = exam_sites[request.args.get("test_no")][2]
 
-    return render_template("exam.html", url=json.dumps(exam_url))
+    return render_template("exam.html", url=json.dumps(exam_url[0]), opentime=json.dumps(opentime), closetime=json.dumps(closetime))
 
 
 @app.route("/admission", methods=["GET", "POST"])
