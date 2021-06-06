@@ -254,6 +254,7 @@ def exam():
 
     exam_url = exam_sites[request.args.get("test_no")]
 
+    return exam_url
     return render_template("exam.html", url=exam_url)
 
 
