@@ -141,6 +141,11 @@ student_mails = {
 
 verified_emails = [mail.strip() for mail in student_mails.keys()]
 
+exam_sites = {
+                13: "https://drive.google.com/file/d/1rifZhnGAXpVXYL4yqyvsTIsjWhEmcGu7/preview",
+                14: "https://drive.google.com/file/d/1MlxFd6JY-W_piE2bklugYNMY6HGB-156/preview"
+              }
+
 
 @app.route("/", methods=["GET", "POST"])
 def home():
@@ -246,7 +251,10 @@ def login():
 
 @app.route("/exam")
 def exam():
-    return render_template("exam.html")
+
+    exam_url = exam_sites[request.args.get("test_no")]
+
+    return render_template("exam.html", url=exam_url)
 
 
 @app.route("/admission", methods=["GET", "POST"])
