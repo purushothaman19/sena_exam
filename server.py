@@ -142,8 +142,8 @@ student_mails = {
 verified_emails = [mail.strip() for mail in student_mails.keys()]
 
 exam_sites = {
-                13: "https://drive.google.com/file/d/1rifZhnGAXpVXYL4yqyvsTIsjWhEmcGu7/preview",
-                14: "https://drive.google.com/file/d/1MlxFd6JY-W_piE2bklugYNMY6HGB-156/preview"
+                "13": "https://drive.google.com/file/d/1rifZhnGAXpVXYL4yqyvsTIsjWhEmcGu7/preview",
+                "14": "https://drive.google.com/file/d/1MlxFd6JY-W_piE2bklugYNMY6HGB-156/preview"
               }
 
 
