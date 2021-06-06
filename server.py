@@ -78,6 +78,7 @@ class Admission(UserMixin, db.Model):
 db.create_all()
 db.session.commit()
 
+
 class RegisterForm(FlaskForm):
     name = StringField('Name*', validators=[DataRequired()])
     email = EmailField('Email*', validators=[DataRequired(message='Enter a valid email-id')])
@@ -135,6 +136,7 @@ student_mails = {
     "krishnannk498@gmail.com": ["Kamatchi", 0],
     "indhuindhumathi141@gmail.com": ["Indhumathi", 4000],
     "jamespurysh@gmail.com": ["Purushothaman", 0],
+    "sivagangainagarajan@gmail.com": ["Nagarajan", 0]
 }
 
 verified_emails = [mail.strip() for mail in student_mails.keys()]
