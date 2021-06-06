@@ -2,6 +2,14 @@
 
 {% include "header.html" %}
 
+			<style>
+
+				.inner {
+					height: 100%;
+					}
+
+			</style>
+
 			<!-- Banner -->
 				<div id="banner-wrapper">
 					<div id="banner" class="box container">
@@ -25,7 +33,7 @@
 									{% if not fee %}
 									<li><a href="{{ url_for('login') }}" class="button large icon solid fa-arrow-circle-right">Login</a></li>
 									<li><a href="{{ url_for('register') }}" class="button alt large icon solid fa-registered">Register</a></li>
-									<li><a href="{{ url_for('new_admission') }}" class="button alt large icon" style="background-color:skyblue; text-align:center; margin-top:6%">New Admission</a></li>
+<!--									<li><a href="{{ url_for('new_admission') }}" class="button alt large icon" style="background-color:skyblue; text-align:center; margin-top:6%">New Admission</a></li>-->
 									{% endif %}
 
 									{% endif %}
