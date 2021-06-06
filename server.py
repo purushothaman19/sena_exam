@@ -20,6 +20,7 @@ from markupsafe import Markup
 from datetime import datetime
 import random
 import os
+import json
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = os.environ.get("SECRET_KEY")
@@ -111,7 +112,7 @@ student_mails = {
     "nivir6558@gmail.com": ["Nivetha", 7000],
     "jaya26jj@gmail.com": ["Christy", 7000],
     "srjamuna@gmail.com": ["jamuna", 7000],
-    "satheshpandian1997@gmail.com": ["Satheshpandian", 5000],
+    "satheshpandian1997@gmail.com": ["Satheshpandian", 7000],
     "lakshmiraja412@gmail.com": ["Rajalaskhmi", 5000],
     "tamilarasanbe9597@gmail.com": ["Anitha", 1000],
     "rajeshkannan6341@gmail.com": ["Rajesh kannan", 3000],
@@ -136,7 +137,7 @@ student_mails = {
     "krishnannk498@gmail.com": ["Kamatchi", 0],
     "indhuindhumathi141@gmail.com": ["Indhumathi", 4000],
     "jamespurysh@gmail.com": ["Purushothaman", 0],
-    "sivagangainagarajan@gmail.com": ["Nagarajan", 0]
+    "sivagangainagarajan@gmail.com": ["Nagarajan", 0],
 }
 
 verified_emails = [mail.strip() for mail in student_mails.keys()]
@@ -254,7 +255,7 @@ def exam():
 
     exam_url = exam_sites[request.args.get("test_no")]
 
-    return render_template("exam.html", url=exam_url)
+    return render_template("exam.html", url=json.dumps(exam_url))
 
 
 @app.route("/admission", methods=["GET", "POST"])
