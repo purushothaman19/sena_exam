@@ -193,6 +193,7 @@ def register():
                                             f"{request.form.get('name')}! Happy to see you with us."
                                             f" Thanks for supporting us! Keep rocking!".encode('utf-8'))
 
+
                 db.session.add(new_user)
                 db.session.commit()
 
@@ -271,6 +272,7 @@ def new_admission():
                                 msg=f"Subject:WELCOME TO SENA CAREER INSTITUTE\n\nWelcome {request.form.get('name')}!"
                                     f" Happy to see you with us. Thanks for supporting us! Keep rocking! "
                                     f"Here is our Educators' number: 8610642720".encode('utf-8'))
+
 
         with smtplib.SMTP('smtp.gmail.com', 587) as connection:
             connection.starttls()
