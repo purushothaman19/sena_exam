@@ -34,9 +34,9 @@ admin = False
 login_manager = LoginManager()
 login_manager.init_app(app)
 
-MY_EMAIL = 'officialpurushothaman@gmail.com'
+MY_EMAIL = os.environ.get("MY_EMAIL")
 SENA_EMAIL = 'sivagangainagarajan@gmail.com'
-MY_PASSWORD = 'purushoth.g'
+MY_PASSWORD = os.environ.get("MY_PASSWORD")
 
 
 @login_manager.user_loader
