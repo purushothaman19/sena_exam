@@ -129,6 +129,8 @@ student_mails = {
     "indhuindhumathi141@gmail.com": ["Indhumathi", 4000],
     "jamespurysh@gmail.com": ["Purushothaman", 0],
     "sivagangainagarajan@gmail.com": ["Nagarajan", 0],
+    "matheshsethu22@gmail.com": ["Mathesh", 4000],
+    "nagarajnkarthika@gmail.com": ["Karthika", 2000],
 }
 
 verified_emails = [mail.strip() for mail in student_mails.keys()]
