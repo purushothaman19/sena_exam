@@ -255,7 +255,7 @@ def exam():
     opentime = exam_sites[request.args.get("test_no")][1]
     closetime = exam_sites[request.args.get("test_no")][2]
 
-    return render_template("exam.html", url=json.dumps(exam_url), opentime=json.dumps(opentime), closetime=json.dumps(closetime))
+    return render_template("exam.html", url=json.dumps(exam_url).replace('"', ''), opentime=json.dumps(opentime), closetime=json.dumps(closetime))
 
 
 @app.route("/admission", methods=["GET", "POST"])
