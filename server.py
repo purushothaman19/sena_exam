@@ -102,7 +102,7 @@ student_mails = {
     "mgopalakrishnan075@gmail.com": ["Gopal", 2000],
     "nivir6558@gmail.com": ["Nivetha", 7000],
     "jaya26jj@gmail.com": ["Christy", 7000],
-    "srjamuna@gmail.com": ["jamuna", 7000],
+    "srjamuna1003@gmail.com": ["jamuna", 7000],
     "satheshpandian1997@gmail.com": ["Satheshpandian", 7000],
     "lakshmiraja412@gmail.com": ["Rajalaskhmi", 5000],
     "tamilarasanbe9597@gmail.com": ["Anitha", 1000],
