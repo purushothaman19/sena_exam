@@ -102,7 +102,7 @@ student_mails = {
     "mgopalakrishnan075@gmail.com": ["Gopal", 2000],
     "nivir6558@gmail.com": ["Nivetha", 7000],
     "jaya26jj@gmail.com": ["Christy", 7000],
-    "srjamuna@gmail.com": ["jamuna", 7000],
+    "srjamuna1003@gmail.com": ["jamuna", 7000],
     "satheshpandian1997@gmail.com": ["Satheshpandian", 7000],
     "lakshmiraja412@gmail.com": ["Rajalaskhmi", 5000],
     "tamilarasanbe9597@gmail.com": ["Anitha", 1000],
@@ -129,6 +129,9 @@ student_mails = {
     "indhuindhumathi141@gmail.com": ["Indhumathi", 4000],
     "jamespurysh@gmail.com": ["Purushothaman", 0],
     "sivagangainagarajan@gmail.com": ["Nagarajan", 0],
+    "matheshsethu22@gmail.com": ["Mathesh", 4000],
+    "nagarajnkarthika@gmail.com": ["Karthika", 2000],
+    "keviraj482@gmail.com" : ["Yogesh", 2000],
 }
 
 verified_emails = [mail.strip() for mail in student_mails.keys()]
@@ -138,7 +141,7 @@ exam_sites = {
                        "May 31, 2021 10:00:00", "May 31, 2021 13:00:00"],
 
                 "14": ["https://drive.google.com/file/d/1MlxFd6JY-W_piE2bklugYNMY6HGB-156/preview",
-                       "June 07, 2021 10:00:00", "June 07, 2021 13:00:00"]
+                       "June 07, 2021 10:00:00", "June 07, 2021 13:30:00"]
 
               }
 
