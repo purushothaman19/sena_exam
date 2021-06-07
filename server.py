@@ -141,7 +141,7 @@ exam_sites = {
                        "May 31, 2021 10:00:00", "May 31, 2021 13:00:00"],
 
                 "14": ["https://drive.google.com/file/d/1MlxFd6JY-W_piE2bklugYNMY6HGB-156/preview",
-                       "June 07, 2021 10:00:00", "June 07, 2021 15:30:00"]
+                       "June 07, 2021 10:00:00", "June 07, 2021 16:00:00"]
 
               }
 
@@ -255,7 +255,7 @@ def exam():
     opentime = exam_sites[request.args.get("test_no")][1]
     closetime = exam_sites[request.args.get("test_no")][2]
 
-    return render_template("exam.html", url=json.dumps(exam_url[0]), opentime=json.dumps(opentime), closetime=json.dumps(closetime))
+    return render_template("exam.html", url=json.dumps(exam_url), opentime=json.dumps(opentime), closetime=json.dumps(closetime))
 
 
 @app.route("/admission", methods=["GET", "POST"])
