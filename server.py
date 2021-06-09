@@ -278,8 +278,8 @@ def result():
     final_result = []
     marks = 0
 
-    mclosetime = "June 09, 2021 20:40:00"
-    mopentime = "June 09, 2021 21:35:00"
+    mopentime = "June 09, 2021 20:35:00"
+    mclosetime = "June 09, 2021 21:40:00"
 
     for i in range(0, 3):
         user_answer = request.args.get(f'answers{i}')
@@ -297,6 +297,7 @@ def result():
     return render_template("exam.html", opentime=json.dumps(mopentime), closetime=json.dumps(mclosetime),
                            answers=answers, marks=marks,  sl_no=sl_no, ques=ques, a=a, b=b, c=c, d=d, submitted=True,
                            correct_answer=correct_answer, final_result=final_result)
+
 
 @app.route("/admission", methods=["GET", "POST"])
 def new_admission():
