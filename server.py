@@ -1,4 +1,5 @@
 import smtplib
+import pandas
 from flask import Flask, render_template, redirect, url_for, flash, request, abort
 from flask_bootstrap import Bootstrap
 from flask_ckeditor import CKEditor
@@ -145,6 +146,17 @@ exam_sites = {
 
               }
 
+file = pandas.read_csv("test-sample.csv")
+data = file.to_dict()
+
+sl_no = list(data['Sl.No'].values())
+ques = list(data['Question'].values())
+a = list(data['A'].values())
+b = list(data['B'].values())
+c = list(data['C'].values())
+d = list(data['D'].values())
+correct_answer = list(data['Answer'].values())
+
 
 @app.route("/", methods=["GET", "POST"])
 def home():
@@ -255,8 +267,36 @@ def exam():
     opentime = exam_sites[request.args.get("test_no")][1]
     closetime = exam_sites[request.args.get("test_no")][2]
 
-    return render_template("exam.html", url=json.dumps(exam_url).replace('"', ''), opentime=json.dumps(opentime), closetime=json.dumps(closetime))
+    return render_template("exam.html", url=json.dumps(exam_url).replace('"', ''), opentime=json.dumps(opentime),
+                           closetime=json.dumps(closetime), sl_no=sl_no, ques=ques, a=a, b=b, c=c, d=d,
+                           correct_answer=correct_answer, answers=[])
 
+
+@app.route("/result", methods=["GET", "POST"])
+def result():
+    answers = []
+    final_result = []
+    marks = 0
+
+    mclosetime = "May 31, 2021 13:00:00"
+    mopentime = "May 31, 2021 13:05:00"
+
+    for i in range(0, 3):
+        user_answer = request.args.get(f'answers{i}')
+        answers.append(user_answer)
+
+    for j in range(len(correct_answer)):
+
+        if answers[j] == correct_answer[j]:
+            marks += 1
+            final_result.append("Correct")
+
+        else:
+            final_result.append("Wrong")
+
+    return render_template("exam.html", opentime=json.dumps(mopentime), closetime=json.dumps(mclosetime),
+                           answers=answers, marks=marks,  sl_no=sl_no, ques=ques, a=a, b=b, c=c, d=d, submitted=True,
+                           correct_answer=correct_answer, final_result=final_result)
 
 @app.route("/admission", methods=["GET", "POST"])
 def new_admission():

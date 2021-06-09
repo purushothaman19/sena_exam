@@ -1,16 +1,4 @@
 {% include "header.html" %}
-			<!-- Main -->
-<!--			<script type="text/javascript" src="http://code.jquery.com/jquery-latest.js"></script>-->
-<!--					<script type="text/javascript">-->
-
-<!--					var timePeriodInMs = 4000;-->
-
-<!--					setTimeout(function()-->
-<!--					{-->
-<!--						document.getElementById("main-wrapper").style.display = "none";-->
-<!--					},-->
-<!--					timePeriodInMs);-->
-<!--					</script>-->
 
 					<style>
 					#demo {
@@ -27,6 +15,47 @@
 					#main-wrapper{
 						display:none;
 						}
+
+					#ques-area {
+						width: 100%;
+						}
+
+					#ques-area h2{
+						text-align: center;
+						}
+
+					#ques-area h4{
+						text-align: center;
+						padding-bottom: 10%;
+						color: red;
+						}
+
+					#ans-area p{
+						text-align: left;
+						}
+
+					input[type="radio"]{
+							-webkit-appearance: radio;
+						}
+
+					.options{
+						padding-right: 1%;
+						text-align: justify;
+						}
+
+
+					#ques-row{
+						text-align: center;
+						}
+
+					#reveal{
+						display: none;
+						}
+
+					.final-answers{
+						display: none;
+						}
+
 					</style>
 
 					<script>
@@ -72,17 +101,9 @@
 					  }
 					}, 1000);
 
-
-
 					</script>
 
 
-<!--					<script type="text/javascript">-->
-
-<!--						$(document).ready( function() {-->
-<!--							$('#final').delay(5000).fadeIn();-->
-<!--						});-->
-<!--						</script>-->
 				<div id="final">
 					<h3 style="text-align: center;">Hope you did well! Thank You!</h3>
 					<p style="text-align:center">Back to <a href="{{ url_for('home') }}">Home!</a></p>
@@ -93,7 +114,94 @@
 				<div id="main-wrapper">
 					<div class="container">
 						<div class="row gtr-200">
-							<iframe src="{{ url }}"  width="100%" height="1100rem" sandbox="allow-forms allow-pointer-lock allow-same-origin allow-scripts allow-top-navigation"></iframe>
+
+								{% if submitted %}
+
+									<style>
+										#answers {
+											display: none;
+											}
+
+										#reveal{
+											display: block;
+											text-align: center;
+											}
+
+										.final-answers{
+											display: block;
+											}
+
+									</style>
+
+								{% endif %}
+
+						<article id="ques-area">
+
+							<div class="col-4 col-12-medium">
+
+								<!-- Box -->
+									<section class="box feature" style="background: pink">
+
+										<div class="inner">
+											<header>
+												<h2>TEST NO.15</h2>
+												<p style="padding-right:0px; position: absolute;">07.06.2021</p>
+												<p style="padding-right:0px; text-align: right">Duration: 3 Hrs</p>
+
+												{% if submitted %}
+												<p style="text-align:center; font-size:2rem; padding:3%; color: deeppink;font-weight:bold">MARKS: {{ marks }}</p>
+												{% endif %}
+
+											</header>
+
+											<hr style="opacity: 0.5;">
+											<div style="padding: 3%;"></div>
+											<h2>Question</h2>
+
+
+										<form class="form-inline" method="GET" action="{{ url_for('result') }}">
+
+											{% for i in range(sl_no | length): %}
+
+													<h5 style="text-align: center; padding:5%">{{ sl_no[i] }} {{ ques[i] }}</h5>
+															<select class="form-select" aria-label="Default select example" id="answers" name="answers{{i}}">
+															  <option selected>Not Yet Answered</option>
+															  <option value="{{ a[i] }}">{{ a[i] }}</option>
+															  <option value="{{ b[i] }}">{{ b[i] }}</option>
+															  <option value="{{ c[i] }}">{{ c[i] }}</option>
+															  <option value="{{ d[i] }}">{{ d[i] }}</option>
+															</select>
+
+													<div id="reveal">
+														<p>{{ a[i] }}</p> <p>{{ b[i] }}</p> <p>{{ c[i] }}</p> <p>{{ d[i] }}</p>
+													</div>
+
+											{% if submitted %}
+													<div class="final-answers" style="text-align: center; padding: 3%">
+														<p>You picked: <b style="color:white; padding-right: 5%">{{ answers[i] }}</b> Correct Answer: <b style="color:green; padding-right: 5%">{{ correct_answer[i] }} </b>
+															<b style="color:red; position:relative;" >{{ final_result[i] }}</b></p>
+													</div>
+											{% endif %}
+
+										{% endfor %}
+
+												{% if not submitted %}
+												<button type="submit" style="margin-top: 10%;" class="btn btn-default">Submit</button>
+												{% endif %}
+											</form>
+
+										</div>
+
+									</section>
+
+							</div>
+
+						</article>
+
+						</div>
+					</div>
+				</div>
+
 
 <!--https://drive.google.com/file/d/1FTYuyr-B_4q8r03DAKWgcIIJuN0LsZoF/preview-->
 <!--							<div class="col-4 col-12-medium">-->
@@ -159,10 +267,6 @@
 
 <!--								</div>-->
 <!--							</div>-->
-
-						</div>
-					</div>
-				</div>
 
 			<!-- Footer -->
 <!--				<div id="footer-wrapper">-->
