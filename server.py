@@ -142,7 +142,7 @@ exam_sites = {
                        "May 31, 2021 10:00:00", "May 31, 2021 13:00:00"],
 
                 "14": ["https://drive.google.com/file/d/1MlxFd6JY-W_piE2bklugYNMY6HGB-156/preview",
-                       "June 07, 2021 10:00:00", "June 09, 2021 21:00:00"]
+                       "June 07, 2021 10:00:00", "June 09, 2021 22:00:00"]
 
               }
 
