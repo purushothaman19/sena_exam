@@ -278,8 +278,8 @@ def result():
     final_result = []
     marks = 0
 
-    mclosetime = "May 31, 2021 13:00:00"
-    mopentime = "May 31, 2021 13:05:00"
+    mclosetime = "June 09, 2021 20:40:00"
+    mopentime = "June 09, 2021 21:35:00"
 
     for i in range(0, 3):
         user_answer = request.args.get(f'answers{i}')
