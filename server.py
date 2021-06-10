@@ -88,8 +88,8 @@ class Test15(db.Model):
 #     db.session.commit()
 
 
-# db.create_all()
-# db.session.commit()
+db.create_all()
+db.session.commit()
 
 
 class RegisterForm(FlaskForm):
