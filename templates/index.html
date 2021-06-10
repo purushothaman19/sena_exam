@@ -19,7 +19,7 @@
 							<div class="col-5 col-12-medium">
 								<ul>
 									{% if warning %}
-									<li><p style="text-align:center; color:red; font-weight:bold;">You are not authorised to this page. Please check your credentials!</p></li>
+									<li><p style="text-align:center; color:red; font-weight:bold;">{{warning}}</p></li>
 									{% else %}
 
 									{% if fee %}
@@ -88,6 +88,30 @@
 									</section>
 							</div>
 
+							<div class="col-4 col-12-medium">
+
+								<!-- Box -->
+									<section class="box feature" style="background: lavender;">
+										<div class="inner">
+											<header>
+												<h2><a href="{{ url_for('exam', test_no=14) }}">TEST NO.15</a></h2>
+												<p>14.06.2021</p>
+											</header>
+											<ul style="list-style-type:none;">
+												<li><strong>Syllabus</strong></li>
+												<li>Unit 5 - ஒன்றிய நாடாளுமன்றம், மாநில சட்டமன்றம் </li>
+												<li>Unit 6 - திட்டக்குழு மற்றும் நிதி ஆயோக்</li>
+												<li>Unit 7- இந்திய தேசிய காங்கிரஸ் </li>
+												<li>Unit 10 - இயற்கணிதம்</li>
+											</ul>
+<!--											{{completed}}-->
+											{% if completed %}
+											<a href="{{ url_for('result') }}"><button type="submit" style="margin-top: 10%;" class="btn btn-default">View Result</button></a>
+											{% endif %}
+										</div>
+									</section>
+							</div>
+
 
 						</div>
 					</div>
@@ -101,7 +125,7 @@
 <!--						<div class="row gtr-200">-->
 <!--							<div class="col-4 col-12-medium">-->
 
-								<!-- Sidebar -->
+<!--								 Sidebar-->
 <!--									<div id="sidebar">-->
 <!--										<section class="widget thumbnails">-->
 <!--											<h3>Interesting stuff</h3>-->

@@ -1,3 +1,4 @@
+import datetime
 import smtplib
 import pandas
 from flask import Flask, render_template, redirect, url_for, flash, request, abort
@@ -7,6 +8,7 @@ from werkzeug.security import generate_password_hash, check_password_hash
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import UserMixin, login_user, LoginManager, login_required, current_user, logout_user
 from flask_wtf import FlaskForm
+from sqlalchemy.orm import relationship
 from wtforms import StringField, SubmitField, PasswordField
 from wtforms.fields.html5 import EmailField
 from wtforms.validators import DataRequired
@@ -55,12 +57,13 @@ class User(UserMixin, db.Model):
     email = db.Column(db.String(100), unique=True)
     password = db.Column(db.String(100))
     username = db.Column(db.String(100))
+    test = relationship("Test15", back_populates="test_author")
 
     def get_id(self):
         return self.user_id
 
 
-class Admission(UserMixin, db.Model):
+class Admission(db.Model):
     __tablename__ = "New_Admission"
     user_id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(100))
@@ -68,8 +71,25 @@ class Admission(UserMixin, db.Model):
     email = db.Column(db.String(100), unique=True)
 
 
-db.create_all()
-db.session.commit()
+class Test15(db.Model):
+    __tablename__ = "Test_15"
+    user_id = db.Column(db.Integer, primary_key=True)
+    examinee_id = db.Column(db.Integer, db.ForeignKey("User.user_id"))
+    test_author = relationship("User", back_populates="test")
+    marks = db.Column(db.Integer)
+    user_answers = db.Column(db.String())
+    final_result = db.Column(db.String())
+    date = db.Column(db.String(250), nullable=False)
+
+
+# for i in range(1, 2):
+#     p = Test15.query.get(i)
+#     db.session.delete(p)
+#     db.session.commit()
+
+
+# db.create_all()
+# db.session.commit()
 
 
 class RegisterForm(FlaskForm):
@@ -132,7 +152,7 @@ student_mails = {
     "sivagangainagarajan@gmail.com": ["Nagarajan", 0],
     "matheshsethu22@gmail.com": ["Mathesh", 4000],
     "nagarajnkarthika@gmail.com": ["Karthika", 2000],
-    "keviraj482@gmail.com" : ["Yogesh", 2000],
+    "keviraj482@gmail.com": ["Yogesh", 2000],
 }
 
 verified_emails = [mail.strip() for mail in student_mails.keys()]
@@ -142,7 +162,7 @@ exam_sites = {
                        "May 31, 2021 10:00:00", "May 31, 2021 13:00:00"],
 
                 "14": ["https://drive.google.com/file/d/1MlxFd6JY-W_piE2bklugYNMY6HGB-156/preview",
-                       "June 07, 2021 10:00:00", "June 10, 2021 22:00:00"]
+                       "June 09, 2021 15:56:00", "June 09, 2021 15:54:00"]
 
               }
 
@@ -160,16 +180,31 @@ correct_answer = list(data['Answer'].values())
 
 @app.route("/", methods=["GET", "POST"])
 def home():
+
     if request.args.get("fee"):
         name = request.args.get("name")
         bending = request.args.get("bending")
         logged_in = request.args.get("logged_in")
 
-        return render_template("index.html", fee=True, name=name, bending=bending, logged_in=logged_in)
+        if Test15.query.filter_by(user_id=current_user.user_id).first():
+            completed = Test15.query.filter_by(user_id=current_user.user_id).first()
+            return render_template("index.html", fee=True, name=name, bending=bending, logged_in=logged_in, completed=completed)
+
+        else:
+            return render_template("index.html", fee=True, name=name, bending=bending, logged_in=logged_in)
 
     warning = request.args.get("warn")
 
-    return render_template("index.html", warning=warning)
+    if current_user.is_authenticated:
+        if Test15.query.filter_by(user_id=current_user.user_id).first():
+            completed = Test15.query.filter_by(user_id=current_user.user_id).first()
+            return render_template("index.html", warning=warning, completed=completed)
+
+        else:
+            return render_template("index.html", warning=warning)
+
+    else:
+        return render_template("index.html", warning=warning)
 
 
 @app.route("/register", methods=['GET', 'POST'])
@@ -263,40 +298,71 @@ def login():
 @app.route("/exam", methods=["GET", "POST"])
 def exam():
 
-    exam_url = exam_sites[request.args.get("test_no")][0]
-    opentime = exam_sites[request.args.get("test_no")][1]
-    closetime = exam_sites[request.args.get("test_no")][2]
+    if request.method == "GET" and request.args.get("submit") == "True":
+        answers = []
+        final_result = []
+        marks = 0
 
-    return render_template("exam.html", url=json.dumps(exam_url).replace('"', ''), opentime=json.dumps(opentime),
-                           closetime=json.dumps(closetime), sl_no=sl_no, ques=ques, a=a, b=b, c=c, d=d,
-                           correct_answer=correct_answer, answers=[])
+        for i in range(0, 3):
+            user_answer = request.args.get(f'answers{i}')
+
+            if user_answer is None:
+                answers.append("None")
+
+            else:
+                answers.append(user_answer)
+
+        for j in range(len(correct_answer)):
+
+            if answers[j] == correct_answer[j]:
+                marks += 1
+                final_result.append("Correct")
+
+            else:
+                final_result.append("Wrong")
+
+        st_answers = '#||#'.join(answers)
+        f_result = "#||#".join(final_result)
+
+        new_examinee = Test15(
+            test_author=current_user,
+            user_answers=st_answers,
+            marks=marks,
+            final_result=f_result,
+            date=datetime.datetime.now()
+        )
+
+        db.session.add(new_examinee)
+        db.session.commit()
+
+        return redirect(url_for('home', warn="You have successfully completed the exam. Click results to see results."))
+
+    else:
+        exam_url = exam_sites[request.args.get("test_no")][0]
+        opentime = exam_sites[request.args.get("test_no")][1]
+        closetime = exam_sites[request.args.get("test_no")][2]
+
+        attended = Test15.query.filter_by(user_id=current_user.user_id).first()
+
+        if attended is None:
+            return render_template("exam.html", url=json.dumps(exam_url).replace('"', ''), opentime=json.dumps(opentime),
+                                   closetime=json.dumps(closetime), sl_no=sl_no, ques=ques, a=a, b=b, c=c, d=d,
+                                   correct_answer=correct_answer, answers=[])
+        else:
+            return redirect(url_for("home", warn="You have already committed this exam. Check the results instead."))
 
 
 @app.route("/result", methods=["GET", "POST"])
 def result():
-    answers = []
-    final_result = []
-    marks = 0
+    attended_student = Test15.query.filter_by(user_id=current_user.user_id).first()
 
-    mopentime = "June 09, 2021 20:35:00"
-    mclosetime = "June 09, 2021 21:40:00"
+    answers = attended_student.user_answers.split('#||#')
+    final_result = attended_student.final_result.split('#||#')
+    marks = attended_student.marks
+    time = attended_student.date
 
-    for i in range(0, 3):
-        user_answer = request.args.get(f'answers{i}')
-        answers.append(user_answer)
-
-    for j in range(len(correct_answer)):
-
-        if answers[j] == correct_answer[j]:
-            marks += 1
-            final_result.append("Correct")
-
-        else:
-            final_result.append("Wrong")
-
-    return render_template("exam.html", opentime=json.dumps(mopentime), closetime=json.dumps(mclosetime),
-                           answers=answers, marks=marks,  sl_no=sl_no, ques=ques, a=a, b=b, c=c, d=d, submitted=True,
-                           correct_answer=correct_answer, final_result=final_result)
+    return render_template("results.html", answers=answers, marks=marks,  sl_no=sl_no, ques=ques, a=a, b=b, c=c, d=d,
+                           correct_answer=correct_answer, final_result=final_result, time=time)
 
 
 @app.route("/admission", methods=["GET", "POST"])
