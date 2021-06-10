@@ -79,6 +79,7 @@ class Test15(db.Model):
     marks = db.Column(db.Integer)
     user_answers = db.Column(db.String())
     final_result = db.Column(db.String())
+    user_name = db.Column(db.String())
     date = db.Column(db.String(250), nullable=False)
 
 
@@ -329,6 +330,7 @@ def exam():
             user_answers=st_answers,
             marks=marks,
             final_result=f_result,
+            user_name=current_user.username,
             date=datetime.datetime.now()
         )
 
@@ -365,43 +367,12 @@ def result():
                            correct_answer=correct_answer, final_result=final_result, time=time)
 
 
-@app.route("/admission", methods=["GET", "POST"])
-def new_admission():
-    form = AdmissionForm()
+@app.route("/dashboard")
+def dashboard():
 
-    if form.validate_on_submit():
-        new_member = Admission(
-            name=form.name.data,
-            mobile_number=form.number.data,
-            email=form.email.data,
-        )
+    all_record = Test15.query.all()
 
-        db.session.add(new_member)
-        db.session.commit()
-
-        # verification_code = random.randint(2000, 10000)
-
-        # with smtplib.SMTP('smtp.gmail.com', 587) as connection:
-        #     connection.starttls()
-        #     connection.login(MY_EMAIL, MY_PASSWORD)
-        #     connection.sendmail(from_addr=MY_EMAIL,
-        #                         to_addrs=request.form.get('email'),
-        #                         msg=f"Subject:WELCOME TO SENA CAREER INSTITUTE\n\nWelcome {request.form.get('name')}!"
-        #                             f" Happy to see you with us. Thanks for supporting us! Keep rocking! "
-        #                             f"Here is our Educators' number: 8610642720".encode('utf-8'))
-
-        # with smtplib.SMTP('smtp.gmail.com', 587) as connection:
-        #     connection.starttls()
-        #     connection.login(MY_EMAIL, MY_PASSWORD)
-        #     connection.sendmail(from_addr=MY_EMAIL,
-        #                         to_addrs=MY_EMAIL,
-        #                         msg=f"Subject:NEW ADMISSION\n\n{request.form.get('name')} has made an "
-        #                             f"admission sign up on Sena site Here is details {request.form.get('name')},"
-        #                             f" {request.form.get('number')}, {request.form.get('email')}!")
-
-        return redirect(url_for('home'))
-
-    return render_template("register.html", form=form, admission=True)
+    return render_template("dashboard.html", all_record=all_record)
 
 
 @app.route("/change_details", methods=["GET", "POST"])
@@ -453,6 +424,45 @@ def change_password():
 def logout():
     logout_user()
     return redirect(url_for('home'))
+
+
+@app.route("/admission", methods=["GET", "POST"])
+def new_admission():
+    form = AdmissionForm()
+
+    if form.validate_on_submit():
+        new_member = Admission(
+            name=form.name.data,
+            mobile_number=form.number.data,
+            email=form.email.data,
+        )
+
+        db.session.add(new_member)
+        db.session.commit()
+
+        # verification_code = random.randint(2000, 10000)
+
+        # with smtplib.SMTP('smtp.gmail.com', 587) as connection:
+        #     connection.starttls()
+        #     connection.login(MY_EMAIL, MY_PASSWORD)
+        #     connection.sendmail(from_addr=MY_EMAIL,
+        #                         to_addrs=request.form.get('email'),
+        #                         msg=f"Subject:WELCOME TO SENA CAREER INSTITUTE\n\nWelcome {request.form.get('name')}!"
+        #                             f" Happy to see you with us. Thanks for supporting us! Keep rocking! "
+        #                             f"Here is our Educators' number: 8610642720".encode('utf-8'))
+
+        # with smtplib.SMTP('smtp.gmail.com', 587) as connection:
+        #     connection.starttls()
+        #     connection.login(MY_EMAIL, MY_PASSWORD)
+        #     connection.sendmail(from_addr=MY_EMAIL,
+        #                         to_addrs=MY_EMAIL,
+        #                         msg=f"Subject:NEW ADMISSION\n\n{request.form.get('name')} has made an "
+        #                             f"admission sign up on Sena site Here is details {request.form.get('name')},"
+        #                             f" {request.form.get('number')}, {request.form.get('email')}!")
+
+        return redirect(url_for('home'))
+
+    return render_template("register.html", form=form, admission=True)
 
 
 if __name__ == '__main__':

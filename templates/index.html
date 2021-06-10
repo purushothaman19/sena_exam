@@ -29,9 +29,12 @@
 									{% endif %}
 
 									{% if not fee %}
+									{% if not current_user.is_authenticated %}
 									<li><a href="{{ url_for('login') }}" class="button large icon solid fa-arrow-circle-right">Login</a></li>
 									<li><a href="{{ url_for('register') }}" class="button alt large icon solid fa-registered">Register</a></li>
-<!--									<li><a href="{{ url_for('new_admission') }}" class="button alt large icon" style="background-color:skyblue; text-align:center; margin-top:6%">New Admission</a></li>-->
+									{% endif %}
+									<li><p style="text-align:center; color:red; font-weight:bold;">Check the Dashboard here!</p></li>
+									<li><a href="{{ url_for('dashboard') }}" class="button alt large icon solid fa-chart-line" style="background-color:skyblue;margin-top:6%">Dashboard</a></li>
 									{% endif %}
 
 									{% endif %}

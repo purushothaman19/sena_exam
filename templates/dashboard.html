@@ -1,0 +1,36 @@
+{% include 'header.html' %}
+
+    <style>
+
+        table{
+            position:relative;
+            width:80%;
+            margin:5% 10%;
+            }
+
+    </style>
+
+
+    <table class="table">
+      <thead>
+        <tr>
+          <th scope="col">SI.No</th>
+          <th scope="col">Name</th>
+          <th scope="col">Marks</th>
+          <th scope="col">Time</th>
+        </tr>
+      </thead>
+
+        {% for record in all_record %}
+          <tbody>
+            <tr>
+              <th scope="row">1</th>
+              <td>{{ record.user_name }}</td>
+              <td>{{ record.marks }}</td>
+              <td>{{ record.date }}</td>
+            </tr>
+        </tbody>
+        {% endfor %}
+    </table>
+
+{% include 'footer.html' %}
