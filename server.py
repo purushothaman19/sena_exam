@@ -189,7 +189,7 @@ def home():
         bending = request.args.get("bending")
         logged_in = request.args.get("logged_in")
 
-        if Test15.query.filter_by(user_id=current_user.user_id).first():
+        if Test15.query.filter_by(examinee_id=current_user.user_id).first():
             completed = Test15.query.filter_by(user_id=current_user.user_id).first()
             return render_template("index.html", fee=True, name=name, bending=bending, logged_in=logged_in, completed=completed)
 
@@ -197,7 +197,7 @@ def home():
             return render_template("index.html", fee=True, name=name, bending=bending, logged_in=logged_in)
 
     elif current_user.is_authenticated:
-        if Test15.query.filter_by(user_id=current_user.user_id).first():
+        if Test15.query.filter_by(examinee_id=current_user.user_id).first():
             completed = Test15.query.filter_by(user_id=current_user.user_id).first()
             return render_template("index.html", warning=warning, completed=completed)
 
