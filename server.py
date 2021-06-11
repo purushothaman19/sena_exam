@@ -1,4 +1,5 @@
 import datetime
+import random
 import smtplib
 import pandas
 from flask import Flask, render_template, redirect, url_for, flash, request, abort
@@ -80,12 +81,6 @@ class Admission(db.Model):
     name = db.Column(db.String(100))
     mobile_number = db.Column(db.Integer)
     email = db.Column(db.String(100), unique=True)
-
-
-for i in range(1, 2):
-    p = Test15.query.get(i)
-    db.session.delete(p)
-    db.session.commit()
 
 
 db.create_all()
@@ -374,8 +369,8 @@ def dashboard():
 
     all_record = Test15.query.all()
 
-    for i in range(1, len(all_record)):
-        examinee_details = User.query.get(i)
+    for v in range(1, len(all_record)):
+        examinee_details = User.query.get(v)
         all_record.append(examinee_details)
 
     print(all_record)
