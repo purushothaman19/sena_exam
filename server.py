@@ -21,7 +21,7 @@ app.config['SECRET_KEY'] = os.environ.get("SECRET_KEY")
 ckeditor = CKEditor(app)
 Bootstrap(app)
 
-app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get("DATABASE_URL",  "sqlite:///sena-base.db")
+app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get("DATABASE_URL",  "sqlite:///sena.db")
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db = SQLAlchemy(app)
 
@@ -69,18 +69,6 @@ class User(UserMixin, db.Model):
 #     name = db.Column(db.String(100))
 #     mobile_number = db.Column(db.Integer)
 #     email = db.Column(db.String(100), unique=True)
-
-
-class Test15(db.Model):
-    __tablename__ = "Test_15"
-    user_id = db.Column(db.Integer, primary_key=True)
-    examinee_id = db.Column(db.Integer, db.ForeignKey("User.user_id"))
-    test_author = relationship("User", back_populates="test")
-    marks = db.Column(db.Integer)
-    user_answers = db.Column(db.String())
-    final_result = db.Column(db.String())
-    date = db.Column(db.String(250), nullable=False)
-
 
 db.create_all()
 db.session.commit()
@@ -365,7 +353,6 @@ def result():
 
 @app.route("/dashboard")
 def dashboard():
-
     all_record = Test15.query.all()
 
     return render_template("dashboard.html", all_record=all_record)
@@ -422,19 +409,19 @@ def logout():
     return redirect(url_for('home'))
 
 
-@app.route("/admission", methods=["GET", "POST"])
-def new_admission():
-    form = AdmissionForm()
-
-    if form.validate_on_submit():
-        new_member = Admission(
-            name=form.name.data,
-            mobile_number=form.number.data,
-            email=form.email.data,
-        )
-
-        db.session.add(new_member)
-        db.session.commit()
+# @app.route("/admission", methods=["GET", "POST"])
+# def new_admission():
+#     form = AdmissionForm()
+#
+#     if form.validate_on_submit():
+#         new_member = Admission(
+#             name=form.name.data,
+#             mobile_number=form.number.data,
+#             email=form.email.data,
+#         )
+#
+#         db.session.add(new_member)
+#         db.session.commit()
 
         # verification_code = random.randint(2000, 10000)
 
@@ -456,9 +443,9 @@ def new_admission():
         #                             f"admission sign up on Sena site Here is details {request.form.get('name')},"
         #                             f" {request.form.get('number')}, {request.form.get('email')}!")
 
-        return redirect(url_for('home'))
-
-    return render_template("register.html", form=form, admission=True)
+    #     return redirect(url_for('home'))
+    #
+    # return render_template("register.html", form=form, admission=True)
 
 
 if __name__ == '__main__':
