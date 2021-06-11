@@ -79,7 +79,7 @@ class Test15(db.Model):
     marks = db.Column(db.Integer)
     user_answers = db.Column(db.String())
     final_result = db.Column(db.String())
-    user_name = db.Column(db.String())
+    # user_name = db.Column(db.String())
     date = db.Column(db.String(250), nullable=False)
 
 
