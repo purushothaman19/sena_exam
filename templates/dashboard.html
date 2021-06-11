@@ -21,14 +21,18 @@
         </tr>
       </thead>
 
+       {% set i = namespace(value=1) %}
+
         {% for record in all_record %}
           <tbody>
             <tr>
-              <th scope="row">{{ record.user_id }}</th>
+              <th scope="row">{{ i.value }}</th>
               <td>{{ record.username }}</td>
               <td>{{ record.marks }}</td>
               <td>{{ record.date }}</td>
             </tr>
+          {% set i.value = i.value + 1 %}
+
         </tbody>
         {% endfor %}
     </table>
