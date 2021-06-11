@@ -327,7 +327,6 @@ def exam():
             user_answers=st_answers,
             marks=marks,
             final_result=f_result,
-            examinee_name=current_user.username,
             date=datetime.datetime.now()
         )
 
@@ -366,16 +365,19 @@ def result():
 
 @app.route("/dashboard")
 def dashboard():
-
     all_record = Test15.query.all()
+
+    # if len(all_record) == len(student_mails) - 3:
 
     for v in range(1, len(all_record)):
         examinee_details = User.query.get(v)
         all_record.append(examinee_details)
 
-    print(all_record)
-
     return render_template("dashboard.html", all_record=all_record)
+
+    # else:
+    #     return redirect(
+    #         url_for('home', warn="Dashboard will be available only after all the students complete the exams."))
 
 
 @app.route("/change_details", methods=["GET", "POST"])
