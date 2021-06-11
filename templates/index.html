@@ -20,22 +20,21 @@
 								<ul>
 									{% if warning %}
 									<li><p style="text-align:center; color:red; font-weight:bold;">{{warning}}</p></li>
-									{% else %}
 
-									{% if fee %}
+									{% elif fee %}
 									<li><p style="text-align:center">Welcome,</p></li>
 									<li><p style="text-align:center; color:red">{{name}}</p></li>
 									<li><p style="text-align:center; color:#0090c5">Fee bending: Rs.{{bending}}</p></li>
-									{% endif %}
 
-									{% if not fee %}
-									{% if not current_user.is_authenticated %}
-									<li><a href="{{ url_for('login') }}" class="button large icon solid fa-arrow-circle-right">Login</a></li>
-									<li><a href="{{ url_for('register') }}" class="button alt large icon solid fa-registered">Register</a></li>
-									{% endif %}
-									<li><p style="text-align:center; color:red; font-weight:bold;">Check the Dashboard here!</p></li>
-									<li><a href="{{ url_for('dashboard') }}" class="button alt large icon solid fa-chart-line" style="background-color:skyblue;margin-top:6%">Dashboard</a></li>
-									{% endif %}
+									{% elif not fee %}
+
+										{% if not current_user.is_authenticated %}
+											<li><a href="{{ url_for('login') }}" class="button large icon solid fa-arrow-circle-right">Login</a></li>
+											<li><a href="{{ url_for('register') }}" class="button alt large icon solid fa-registered">Register</a></li>
+										{% endif %}
+
+										<li><p style="text-align:center; color:red; font-weight:bold;">Check the Dashboard here!</p></li>
+										<li><a href="{{ url_for('dashboard') }}" class="button alt large icon solid fa-chart-line" style="background-color:skyblue;margin-top:6%">Dashboard</a></li>
 
 									{% endif %}
 
