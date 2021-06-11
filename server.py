@@ -365,7 +365,14 @@ def result():
 
 @app.route("/dashboard")
 def dashboard():
+
     all_record = Test15.query.all()
+
+    for i in range(1, len(all_record)):
+        examinee_details = User.query.get(i)
+        all_record.append(examinee_details)
+
+    print(all_record)
 
     return render_template("dashboard.html", all_record=all_record)
 
