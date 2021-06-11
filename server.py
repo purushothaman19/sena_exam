@@ -197,6 +197,7 @@ def home():
             return render_template("index.html", fee=True, name=name, bending=bending, logged_in=logged_in)
 
     elif current_user.is_authenticated:
+        return f"{Test15.query.filter_by(examinee_id=current_user.user_id).first()}"
         if Test15.query.filter_by(examinee_id=current_user.user_id).first():
             completed = Test15.query.filter_by(examinee_id=current_user.user_id).first()
             return render_template("index.html", warning=warning, completed=completed)
