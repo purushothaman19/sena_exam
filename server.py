@@ -82,6 +82,12 @@ class Admission(db.Model):
     email = db.Column(db.String(100), unique=True)
 
 
+for i in range(1, 2):
+    p = Test15.query.get(i)
+    db.session.delete(p)
+    db.session.commit()
+
+
 db.create_all()
 db.session.commit()
 
