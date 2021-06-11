@@ -75,11 +75,11 @@ class Test15(db.Model):
     __tablename__ = "Test_15"
     user_id = db.Column(db.Integer, primary_key=True)
     examinee_id = db.Column(db.Integer, db.ForeignKey("User.user_id"))
+    examinee_name = db.Column(db.String, db.ForeignKey("User.username"))
     test_author = relationship("User", back_populates="test")
     marks = db.Column(db.Integer)
     user_answers = db.Column(db.String())
     final_result = db.Column(db.String())
-    # user_name = db.Column(db.String())
     date = db.Column(db.String(250), nullable=False)
 
 
@@ -327,7 +327,7 @@ def exam():
             user_answers=st_answers,
             marks=marks,
             final_result=f_result,
-            user_name=current_user.username,
+            examinee_name=current_user.username,
             date=datetime.datetime.now()
         )
 
