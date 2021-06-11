@@ -197,6 +197,7 @@ def home():
     warning = request.args.get("warn")
 
     if current_user.is_authenticated:
+        return current_user.is_authenticated
         if Test15.query.filter_by(user_id=current_user.user_id).first():
             completed = Test15.query.filter_by(user_id=current_user.user_id).first()
             return render_template("index.html", warning=warning, completed=completed)
