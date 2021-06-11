@@ -21,7 +21,7 @@ app.config['SECRET_KEY'] = os.environ.get("SECRET_KEY")
 ckeditor = CKEditor(app)
 Bootstrap(app)
 
-app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get("DATABASE_URL",  "sqlite:///sena.db")
+app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get("DATABASE_URL",  "sqlite:///sena-base.db")
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db = SQLAlchemy(app)
 
@@ -63,12 +63,24 @@ class User(UserMixin, db.Model):
         return self.user_id
 
 
-# class Admission(db.Model):
-#     __tablename__ = "New_Admission"
-#     user_id = db.Column(db.Integer, primary_key=True)
-#     name = db.Column(db.String(100))
-#     mobile_number = db.Column(db.Integer)
-#     email = db.Column(db.String(100), unique=True)
+class Test15(db.Model):
+    __tablename__ = "Test_15"
+    user_id = db.Column(db.Integer, primary_key=True)
+    examinee_id = db.Column(db.Integer, db.ForeignKey("User.user_id"))
+    test_author = relationship("User", back_populates="test")
+    marks = db.Column(db.Integer)
+    user_answers = db.Column(db.String())
+    final_result = db.Column(db.String())
+    examinee_name = db.Column(db.String())
+    date = db.Column(db.String(250), nullable=False)
+
+
+class Admission(db.Model):
+    __tablename__ = "New_Admission"
+    user_id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(100))
+    mobile_number = db.Column(db.Integer)
+    email = db.Column(db.String(100), unique=True)
 
 db.create_all()
 db.session.commit()
@@ -409,43 +421,43 @@ def logout():
     return redirect(url_for('home'))
 
 
-# @app.route("/admission", methods=["GET", "POST"])
-# def new_admission():
-#     form = AdmissionForm()
-#
-#     if form.validate_on_submit():
-#         new_member = Admission(
-#             name=form.name.data,
-#             mobile_number=form.number.data,
-#             email=form.email.data,
-#         )
-#
-#         db.session.add(new_member)
-#         db.session.commit()
+@app.route("/admission", methods=["GET", "POST"])
+def new_admission():
+    form = AdmissionForm()
 
-        # verification_code = random.randint(2000, 10000)
+    if form.validate_on_submit():
+        new_member = Admission(
+            name=form.name.data,
+            mobile_number=form.number.data,
+            email=form.email.data,
+        )
 
-        # with smtplib.SMTP('smtp.gmail.com', 587) as connection:
-        #     connection.starttls()
-        #     connection.login(MY_EMAIL, MY_PASSWORD)
-        #     connection.sendmail(from_addr=MY_EMAIL,
-        #                         to_addrs=request.form.get('email'),
-        #                         msg=f"Subject:WELCOME TO SENA CAREER INSTITUTE\n\nWelcome {request.form.get('name')}!"
-        #                             f" Happy to see you with us. Thanks for supporting us! Keep rocking! "
-        #                             f"Here is our Educators' number: 8610642720".encode('utf-8'))
+        db.session.add(new_member)
+        db.session.commit()
 
-        # with smtplib.SMTP('smtp.gmail.com', 587) as connection:
-        #     connection.starttls()
-        #     connection.login(MY_EMAIL, MY_PASSWORD)
-        #     connection.sendmail(from_addr=MY_EMAIL,
-        #                         to_addrs=MY_EMAIL,
-        #                         msg=f"Subject:NEW ADMISSION\n\n{request.form.get('name')} has made an "
-        #                             f"admission sign up on Sena site Here is details {request.form.get('name')},"
-        #                             f" {request.form.get('number')}, {request.form.get('email')}!")
+        verification_code = random.randint(2000, 10000)
 
-    #     return redirect(url_for('home'))
-    #
-    # return render_template("register.html", form=form, admission=True)
+        with smtplib.SMTP('smtp.gmail.com', 587) as connection:
+            connection.starttls()
+            connection.login(MY_EMAIL, MY_PASSWORD)
+            connection.sendmail(from_addr=MY_EMAIL,
+                                to_addrs=request.form.get('email'),
+                                msg=f"Subject:WELCOME TO SENA CAREER INSTITUTE\n\nWelcome {request.form.get('name')}!"
+                                    f" Happy to see you with us. Thanks for supporting us! Keep rocking! "
+                                    f"Here is our Educators' number: 8610642720".encode('utf-8'))
+
+        with smtplib.SMTP('smtp.gmail.com', 587) as connection:
+            connection.starttls()
+            connection.login(MY_EMAIL, MY_PASSWORD)
+            connection.sendmail(from_addr=MY_EMAIL,
+                                to_addrs=MY_EMAIL,
+                                msg=f"Subject:NEW ADMISSION\n\n{request.form.get('name')} has made an "
+                                    f"admission sign up on Sena site Here is details {request.form.get('name')},"
+                                    f" {request.form.get('number')}, {request.form.get('email')}!")
+
+        return redirect(url_for('home'))
+
+    return render_template("register.html", form=form, admission=True)
 
 
 if __name__ == '__main__':
