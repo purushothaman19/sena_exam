@@ -24,7 +24,7 @@
         {% for record in all_record %}
           <tbody>
             <tr>
-              <th scope="row">1</th>
+              <th scope="row">{{ record.user_id }}</th>
               <td>{{ record.username }}</td>
               <td>{{ record.marks }}</td>
               <td>{{ record.date }}</td>
