@@ -21,7 +21,7 @@ app.config['SECRET_KEY'] = os.environ.get("SECRET_KEY")
 ckeditor = CKEditor(app)
 Bootstrap(app)
 
-app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get("DATABASE_URL",  "sqlite:///sena-base.db")
+app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get("DATABASE_URL",  "sqlite:///sena.db")
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db = SQLAlchemy(app)
 
@@ -81,12 +81,6 @@ class Test15(db.Model):
     final_result = db.Column(db.String())
     user_name = db.Column(db.String())
     date = db.Column(db.String(250), nullable=False)
-
-
-# for i in range(1, 2):
-#     p = Test15.query.get(i)
-#     db.session.delete(p)
-#     db.session.commit()
 
 
 db.create_all()
@@ -193,7 +187,8 @@ def home():
 
             if Test15.query.filter_by(examinee_id=current_user.user_id).first():
                 completed = Test15.query.filter_by(user_id=current_user.user_id).first()
-                return render_template("index.html", fee=True, name=name, bending=bending, logged_in=logged_in, completed=completed)
+                return render_template("index.html", fee=True, name=name, bending=bending, logged_in=logged_in,
+                                       completed=completed)
 
             else:
                 return render_template("index.html", fee=True, name=name, bending=bending, logged_in=logged_in)
