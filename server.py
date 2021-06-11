@@ -82,6 +82,7 @@ class Admission(db.Model):
     mobile_number = db.Column(db.Integer)
     email = db.Column(db.String(100), unique=True)
 
+
 db.create_all()
 db.session.commit()
 
