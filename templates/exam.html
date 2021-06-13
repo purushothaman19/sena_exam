@@ -163,7 +163,7 @@
 											<h2>Question</h2>
 
 
-										<form class="form-inline" method="GET" action="{{ url_for('exam') }}">
+										<form class="form-inline" method="POST" action="{{ url_for('evaluate') }}">
 
 											{% for i in range(sl_no | length): %}
 
