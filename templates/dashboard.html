@@ -23,13 +23,13 @@
 
        {% set i = namespace(value=1) %}
 
-        {% for record in all_record %}
+        {% for i in range(student_time | length) %}
           <tbody>
             <tr>
               <th scope="row">{{ i.value }}</th>
-              <td>{{ record.username }}</td>
-              <td>{{ record.marks }}</td>
-              <td>{{ record.date }}</td>
+              <td>{{ names[i] }}</td>
+              <td>{{ marks[i] }}</td>
+              <td>{{ times[i] }}</td>
             </tr>
           {% set i.value = i.value + 1 %}
 

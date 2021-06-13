@@ -153,12 +153,7 @@ student_mails = {
 verified_emails = [mail.strip() for mail in student_mails.keys()]
 
 exam_sites = {
-                "13": ["https://drive.google.com/file/d/1rifZhnGAXpVXYL4yqyvsTIsjWhEmcGu7/preview",
-                       "May 31, 2021 10:00:00", "May 31, 2021 13:00:00"],
-
-                "14": ["https://drive.google.com/file/d/1MlxFd6JY-W_piE2bklugYNMY6HGB-156/preview",
-                       "June 09, 2021 15:56:00", "June 09, 2021 15:54:00"]
-
+                "15": ["June 12, 2021 10:00:00", "June 14, 2021 10:00:00"] #time
               }
 
 file = pandas.read_csv("test-sample.csv")
@@ -171,6 +166,8 @@ b = list(data['B'].values())
 c = list(data['C'].values())
 d = list(data['D'].values())
 correct_answer = list(data['Answer'].values())
+
+report15 = pandas.read_csv('report15.csv')
 
 
 @app.route("/", methods=["GET", "POST"])
@@ -185,8 +182,9 @@ def home():
             bending = request.args.get("bending")
             logged_in = request.args.get("logged_in")
 
-            if Test15.query.filter_by(examinee_id=current_user.user_id).first():
-                completed = Test15.query.filter_by(user_id=current_user.user_id).first()
+            completed = report15[current_user.email][3]
+
+            if completed:
                 return render_template("index.html", fee=True, name=name, bending=bending, logged_in=logged_in,
                                        completed=completed)
 
@@ -194,7 +192,10 @@ def home():
                 return render_template("index.html", fee=True, name=name, bending=bending, logged_in=logged_in)
 
         else:
-            if Test15.query.filter_by(examinee_id=current_user.user_id).first():
+
+            completed = report15[current_user.email][3]
+
+            if completed:
                 completed = Test15.query.filter_by(examinee_id=current_user.user_id).first()
                 return render_template("index.html", warning=warning, completed=completed)
 
@@ -234,15 +235,6 @@ def register():
             errors.clear()
 
             if request.form.get('email') in verified_emails:
-
-                # with smtplib.SMTP('smtp.gmail.com', 587) as connection:
-                #     connection.starttls()
-                #     connection.login(MY_EMAIL, MY_PASSWORD)
-                #     connection.sendmail(from_addr=MY_EMAIL,
-                #                         to_addrs=request.form.get('email'),
-                #                         msg=f"Subject:WELCOME TO SENA CAREER INSTITUTE\n\nWelcome "
-                #                             f"{request.form.get('name')}! Happy to see you with us."
-                #                             f" Thanks for supporting us! Keep rocking!".encode('utf-8'))
 
                 db.session.add(new_user)
                 db.session.commit()
@@ -337,16 +329,15 @@ def exam():
         return redirect(url_for('home', warn="You have successfully completed the exam. Click results to see results."))
 
     else:
-        exam_url = exam_sites[request.args.get("test_no")][0]
-        opentime = exam_sites[request.args.get("test_no")][1]
-        closetime = exam_sites[request.args.get("test_no")][2]
+        opentime = exam_sites[request.args.get("test_no")][0]
+        closetime = exam_sites[request.args.get("test_no")][1]
 
         attended = Test15.query.filter_by(user_id=current_user.user_id).first()
 
         if attended is None:
-            return render_template("exam.html", url=json.dumps(exam_url).replace('"', ''), opentime=json.dumps(opentime),
+            return render_template("exam.html", opentime=json.dumps(opentime),
                                    closetime=json.dumps(closetime), sl_no=sl_no, ques=ques, a=a, b=b, c=c, d=d,
-                                   correct_answer=correct_answer, answers=[])
+                                   correct_answer=correct_answer)
         else:
             return redirect(url_for("home", warn="You have already committed this exam. Check the results instead."))
 
@@ -366,19 +357,12 @@ def result():
 
 @app.route("/dashboard")
 def dashboard():
-    all_record = Test15.query.all()
 
-    # if len(all_record) == len(student_mails) - 3:
+    student_names = [i for i in data.values[0][1:]]
+    student_marks = [j for j in data.values[1][1:]]
+    student_time = [k for k in data.values[2][1:]]
 
-    for v in range(1, len(all_record)):
-        examinee_details = User.query.get(v)
-        all_record.append(examinee_details)
-
-    return render_template("dashboard.html", all_record=all_record)
-
-    # else:
-    #     return redirect(
-    #         url_for('home', warn="Dashboard will be available only after all the students complete the exams."))
+    return render_template("dashboard.html", names=student_names, times=student_time, marks=student_marks)
 
 
 @app.route("/change_details", methods=["GET", "POST"])
@@ -445,26 +429,6 @@ def new_admission():
 
         db.session.add(new_member)
         db.session.commit()
-
-        verification_code = random.randint(2000, 10000)
-
-        with smtplib.SMTP('smtp.gmail.com', 587) as connection:
-            connection.starttls()
-            connection.login(MY_EMAIL, MY_PASSWORD)
-            connection.sendmail(from_addr=MY_EMAIL,
-                                to_addrs=request.form.get('email'),
-                                msg=f"Subject:WELCOME TO SENA CAREER INSTITUTE\n\nWelcome {request.form.get('name')}!"
-                                    f" Happy to see you with us. Thanks for supporting us! Keep rocking! "
-                                    f"Here is our Educators' number: 8610642720".encode('utf-8'))
-
-        with smtplib.SMTP('smtp.gmail.com', 587) as connection:
-            connection.starttls()
-            connection.login(MY_EMAIL, MY_PASSWORD)
-            connection.sendmail(from_addr=MY_EMAIL,
-                                to_addrs=MY_EMAIL,
-                                msg=f"Subject:NEW ADMISSION\n\n{request.form.get('name')} has made an "
-                                    f"admission sign up on Sena site Here is details {request.form.get('name')},"
-                                    f" {request.form.get('number')}, {request.form.get('email')}!")
 
         return redirect(url_for('home'))
 
