@@ -764,7 +764,8 @@ def evaluate():
         else:
             final_result.append("Wrong")
 
-    return f"{final_result, answers, correct_answer}"
+    # return f"{final_result, answers, correct_answer}"
+
     st_answers = '#||#'.join(answers)
     f_result = "#||#".join(final_result)
 
