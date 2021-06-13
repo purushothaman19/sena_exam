@@ -326,7 +326,7 @@ def exam():
             db.session.add(new_examinee)
             db.session.commit()
 
-            if report15[f"{current_user.email}"][3] == "False":
+            if not report15[f"{current_user.email}"][3]:
                 return f'{report15[f"{current_user.email}"][3]}'
 
             # if report15[f"{current_user.email}"][3] == "False":
