@@ -358,9 +358,9 @@ def result():
 @app.route("/dashboard")
 def dashboard():
 
-    student_names = [i for i in data.values[0][1:]]
-    student_marks = [j for j in data.values[1][1:]]
-    student_time = [k for k in data.values[2][1:]]
+    student_names = [i for i in report15.values[0][1:]]
+    student_marks = [j for j in report15.values[1][1:]]
+    student_time = [k for k in report15.values[2][1:]]
 
     return render_template("dashboard.html", names=student_names, times=student_time, marks=student_marks)
 
