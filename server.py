@@ -326,6 +326,8 @@ def exam():
             db.session.add(new_examinee)
             db.session.commit()
 
+            return f'{report15[f"{current_user.email}"][3] }'
+
             if report15[f"{current_user.email}"][3] == "False":
 
                 report15.loc[3, f"{current_user.email}"] = "True"
@@ -345,6 +347,7 @@ def exam():
                 return render_template("exam.html", opentime=json.dumps(opentime),
                                        closetime=json.dumps(closetime), sl_no=sl_no, ques=ques, a=a, b=b, c=c, d=d,
                                        correct_answer=correct_answer)
+
             else:
                 return redirect(
                     url_for("home", warn="You have already committed this exam. Check the results instead."))
