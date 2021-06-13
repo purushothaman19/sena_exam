@@ -81,6 +81,9 @@
 									{% endif %}
 									<li><a href="{{ url_for('change_password') }}">Change Password</a></li>
 
+									{% if current_user.email == "jamespurysh@gmail.com" or "sivagangainagarajan@gmail.com" or "gangadha91@gmail.com" %}
+									<li><a href="{{ url_for('dashboard') }}">Dashboard</a></li>
+
 								</ul>
 							</nav>
 
