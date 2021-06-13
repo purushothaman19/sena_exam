@@ -45,15 +45,14 @@
 									<li class="current"><a href="/">Welcome</a></li>
 
 									{% if current_user.is_authenticated %}
-									<li><a href="{{ url_for('logout') }}">Log-Out</a></li>
+									<li><a href="{{ url_for('logout') }}">Log-Out{{ current_user.email }}</a></li>
+									{% if current_user.email == "jamespurysh@gmail.com" or "sivagangainagarajan@gmail.com" or "gangadha91@gmail.com" %}
+									<li><a href="{{ url_for('dashboard') }}">Dashboard</a></li>
+									{% endif %}
 
 									{% else %}
 									<li><a href="{{ url_for('login') }}">Login</a></li>
-									<li><a href="{{ url_for('register') }}">Register{{ current_user.email }}</a></li>
-
-										{% if current_user.email == "jamespurysh@gmail.com" or "sivagangainagarajan@gmail.com" or "gangadha91@gmail.com" %}
-										<li><a href="{{ url_for('dashboard') }}">Dashboard</a></li>
-										{% endif %}
+									<li><a href="{{ url_for('register') }}">Register</a></li>
 
 									{% endif %}
 
