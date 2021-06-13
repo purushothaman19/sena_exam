@@ -365,7 +365,7 @@ def dashboard():
     student_marks = [j for j in report15.values[1][1:]]
     student_time = [l for l in report15.values[2][1:]]
 
-    return render_template("dashboard.html", marks=student_marks, names=student_names, time=student_time)
+    return render_template("dashboard.html", marks=student_marks, names=student_names, times=student_time)
 
 
 @app.route("/change_details", methods=["GET", "POST"])
