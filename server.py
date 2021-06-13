@@ -22,7 +22,7 @@ app.config['SECRET_KEY'] = os.environ.get("SECRET_KEY")
 ckeditor = CKEditor(app)
 Bootstrap(app)
 
-app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get("DATABASE_URL",  "sqlite:///sena-base.db")
+app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get("DATABASE_URL", "sqlite:///sena-base.db")
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db = SQLAlchemy(app)
 
@@ -153,8 +153,8 @@ student_mails = {
 verified_emails = [mail.strip() for mail in student_mails.keys()]
 
 exam_sites = {
-                "15": ["June 12, 2021 10:00:00", "June 14, 2021 10:00:00"] #time
-              }
+    "15": ["June 12, 2021 10:00:00", "June 14, 2021 10:00:00"]  # time
+}
 
 file = pandas.read_csv("test-sample.csv")
 data = file.to_dict()
@@ -172,7 +172,6 @@ report15 = pandas.read_csv('report15.csv')
 
 @app.route("/", methods=["GET", "POST"])
 def home():
-
     warning = request.args.get("warn")
 
     if current_user.is_authenticated:
@@ -288,7 +287,6 @@ def login():
 @app.route("/exam", methods=["GET", "POST"])
 @login_required
 def exam():
-
     if current_user.is_authenticated:
 
         if request.method == "GET" and request.args.get("submit") == "True":
@@ -333,8 +331,9 @@ def exam():
                 report15.loc[3, f"{current_user.email}"] = "True"
                 report15.to_csv("report15.csv", index=False)
 
-            return redirect(url_for('home', warn="You have successfully completed the exam. Click results to see "
-                                                 "results."))
+            elif report15[f"{current_user.email}"][3] == "True":
+                return redirect(url_for('home', warn="You have successfully completed the exam. Click results to see "
+                                                     "results."))
 
         else:
             opentime = exam_sites[request.args.get("test_no")][0]
@@ -347,7 +346,8 @@ def exam():
                                        closetime=json.dumps(closetime), sl_no=sl_no, ques=ques, a=a, b=b, c=c, d=d,
                                        correct_answer=correct_answer)
             else:
-                return redirect(url_for("home", warn="You have already committed this exam. Check the results instead."))
+                return redirect(
+                    url_for("home", warn="You have already committed this exam. Check the results instead."))
 
     else:
         return redirect(url_for('login', msg="You need to login to take test"))
@@ -362,13 +362,12 @@ def result():
     marks = attended_student.marks
     time = attended_student.date
 
-    return render_template("results.html", answers=answers, marks=marks,  sl_no=sl_no, ques=ques, a=a, b=b, c=c, d=d,
+    return render_template("results.html", answers=answers, marks=marks, sl_no=sl_no, ques=ques, a=a, b=b, c=c, d=d,
                            correct_answer=correct_answer, final_result=final_result, time=time)
 
 
 @app.route("/dashboard")
 def dashboard():
-
     student_names = [i for i in report15.values[0][1:]]
     student_marks = [j for j in report15.values[1][1:]]
     student_time = [k for k in report15.values[2][1:]]
