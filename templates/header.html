@@ -50,8 +50,8 @@
 									{% else %}
 									<li><a href="{{ url_for('login') }}">Login</a></li>
 									<li><a href="{{ url_for('register') }}">Register</a></li>
-
 									{% endif %}
+
 									<li><a href="{{ url_for('change_password') }}">Change Password</a></li>
 
 									{% if current_user.email == "jamespurysh@gmail.com" or "sivagangainagarajan@gmail.com" or "gangadha91@gmail.com" %}
