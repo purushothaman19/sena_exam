@@ -738,7 +738,7 @@ def exam():
     #     return redirect(url_for("home", warn="You have already committed this exam. Check the results instead."))
 
 
-@app.route('/evaluate')
+@app.route('/evaluate', methods=["GET", "POST"])
 def evaluate():
     if request.args.get("submit") == "True":
         answers = []
