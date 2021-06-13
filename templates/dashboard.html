@@ -22,9 +22,9 @@
       </thead>
 
        {% set i = namespace(value=1) %}
-        {{ time | length }}
+        {{ times | length }}
 
-        {% for i in range(time | length) %}
+        {% for i in range(times | length) %}
           <tbody>
             <tr>
               <th scope="row">{{ i.value }}</th>
