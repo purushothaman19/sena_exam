@@ -334,10 +334,10 @@ def exam():
                 return redirect(url_for('home', warn="You have successfully completed the exam. Click results to see "
                                                      "results."))
 
-            else:
-                # return f'{report15[f"{current_user.email}"][3] == "False"}'
-                return redirect(url_for('home', warn="You have successfully completed the exam. Click results to see "
-                                                     "results."))
+            # else:
+            #     # return f'{report15[f"{current_user.email}"][3] == "False"}'
+            #     return redirect(url_for('home', warn="You have successfully completed the exam. Click results to see "
+            #                                          "results."))
 
         else:
             opentime = exam_sites[request.args.get("test_no")][0]
