@@ -117,15 +117,15 @@ class ChangeDetails(FlaskForm):
 student_mails = {
     "mgopalakrishnan075@gmail.com": ["Gopal", 2000],
     "nivir6558@gmail.com": ["Nivetha", 7000],
-    "jaya26jj@gmail.com": ["Christy", 7000],
+    "jaya26jj@gmail.com": ["Christy", 5000],
     "srjamuna1003@gmail.com": ["jamuna", 7000],
-    "satheshpandian1997@gmail.com": ["Satheshpandian", 7000],
+    "satheshpandian1997@gmail.com": ["Satheshpandian", 4000],
     "lakshmiraja412@gmail.com": ["Rajalaskhmi", 5000],
     "tamilarasanbe9597@gmail.com": ["Anitha", 1000],
     "rajeshkannan6341@gmail.com": ["Rajesh kannan", 3000],
     "jaishreeramgp@gmail.com": ["Yogapriya", 3000],
-    "irudhayasubiksha2001@gmail.com": ["Subiksha", 3000],
-    "abinayaabi257@gmail.com": ["Abi", 3000],
+    "irudhayasubiksha2001@gmail.com": ["Subiksha", 0],
+    "abinayaabi257@gmail.com": ["Abi", 1000],
     "shanthirasu1991@gmail.com": ["Shanthi", 0],
     "pradee1296@gmail.com": ["Pradeepa", 5000],
     "jeniferj0204@gmail.com": ["Janifer", 7000],
@@ -133,7 +133,7 @@ student_mails = {
     "naveenaryan440@gmail.com": ["Naveen", 0],
     "veerasurya250899@gmail.com": ["Suriya", 3000],
     "amin2svg@gmail.com": ["Amin", 3000],
-    "jjprincy06@gmail.com": ["Jeba Josepin Princy", 3000],
+    "jjprincy06@gmail.com": ["Jeba Josepin Princy", 0],
     "jancybetsia20@gmail.com": ["Jancy", 0],
     "cottonpanju9@gmail.com": ["Panju", 2000],
     "rameswariv1999@gmail.com": ["Rameshwari", 2000],
@@ -608,7 +608,6 @@ correct_answer = ['B) GDP', 'D) அனைத்தும்', 'B) மூன்�
                   'B) 1/2', 'B) 2/3', 'C) ₹95000', 'C) ₹2560', 'A) 10', 'B) 7', 'B) 34', 'B) 23√2', 'D) 29-ஆவது',
                   'A) a/b']
 
-
 report15 = pandas.read_csv('report15.csv')
 
 
@@ -724,19 +723,23 @@ def login():
 
 @app.route("/exam", methods=["GET", "POST"])
 def exam():
-    exam_url = exam_sites[request.args.get("test_no")][0]
-    opentime = exam_sites[request.args.get("test_no")][1]
-    closetime = exam_sites[request.args.get("test_no")][2]
+    if current_user.is_authenticated:
+        exam_url = exam_sites[request.args.get("test_no")][0]
+        opentime = exam_sites[request.args.get("test_no")][1]
+        closetime = exam_sites[request.args.get("test_no")][2]
 
-    attended = Test15.query.filter_by(examinee_id=current_user.user_id).first()
+        attended = Test15.query.filter_by(examinee_id=current_user.user_id).first()
 
-    # if attended is None:
-    return render_template("exam.html", url=json.dumps(exam_url).replace('"', ''),
-                           opentime=json.dumps(opentime),
-                           closetime=json.dumps(closetime), sl_no=sl_no, ques=ques, a=a, b=b, c=c, d=d,
-                           correct_answer=correct_answer, answers=[])
-    # else:
-    #     return redirect(url_for("home", warn="You have already committed this exam. Check the results instead."))
+        if attended is None:
+            return render_template("exam.html", url=json.dumps(exam_url).replace('"', ''),
+                                   opentime=json.dumps(opentime),
+                                   closetime=json.dumps(closetime), sl_no=sl_no, ques=ques, a=a, b=b, c=c, d=d,
+                                   correct_answer=correct_answer, answers=[])
+        else:
+            return redirect(url_for("home", warn="You have already committed this exam. Check the results instead."))
+
+    else:
+        return render_template('login.html', msg="You need to sign to continue this process!")
 
 
 @app.route('/evaluate', methods=["GET", "POST"])
