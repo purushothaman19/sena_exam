@@ -22,7 +22,7 @@ app.config['SECRET_KEY'] = os.environ.get("SECRET_KEY")
 ckeditor = CKEditor(app)
 Bootstrap(app)
 
-app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get("DATABASE_URL", "sqlite:///sena-base.db")
+app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get("DATABASE_URL",  "sqlite:///sena-base.db")
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db = SQLAlchemy(app)
 
@@ -153,8 +153,13 @@ student_mails = {
 verified_emails = [mail.strip() for mail in student_mails.keys()]
 
 exam_sites = {
-    "15": ["June 12, 2021 10:00:00", "June 14, 2021 10:00:00"]  # time
-}
+                "13": ["https://drive.google.com/file/d/1rifZhnGAXpVXYL4yqyvsTIsjWhEmcGu7/preview",
+                       "May 31, 2021 10:00:00", "May 31, 2021 13:00:00"],
+
+                "14": ["https://drive.google.com/file/d/1MlxFd6JY-W_piE2bklugYNMY6HGB-156/preview",
+                       "June 09, 2021 15:56:00", "June 09, 2021 15:54:00"]
+
+              }
 
 file = pandas.read_csv("test-sample.csv")
 data = file.to_dict()
@@ -167,11 +172,10 @@ c = list(data['C'].values())
 d = list(data['D'].values())
 correct_answer = list(data['Answer'].values())
 
-report15 = pandas.read_csv('report15.csv')
-
 
 @app.route("/", methods=["GET", "POST"])
 def home():
+
     warning = request.args.get("warn")
 
     if current_user.is_authenticated:
@@ -181,25 +185,21 @@ def home():
             bending = request.args.get("bending")
             logged_in = request.args.get("logged_in")
 
-            completed = report15[current_user.email][3]
-
-            if completed == "True":
+            if Test15.query.filter_by(examinee_id=current_user.user_id).first():
+                completed = Test15.query.filter_by(user_id=current_user.user_id).first()
                 return render_template("index.html", fee=True, name=name, bending=bending, logged_in=logged_in,
                                        completed=completed)
 
             else:
-                return render_template("index.html", fee=True, name=name, bending=bending, logged_in=logged_in,
-                                       completed=completed)
+                return render_template("index.html", fee=True, name=name, bending=bending, logged_in=logged_in)
 
         else:
-
-            completed = report15[current_user.email][3]
-
-            if completed == "True":
+            if Test15.query.filter_by(examinee_id=current_user.user_id).first():
+                completed = Test15.query.filter_by(examinee_id=current_user.user_id).first()
                 return render_template("index.html", warning=warning, completed=completed)
 
             else:
-                return render_template("index.html", warning=warning, completed=completed)
+                return render_template("index.html", warning=warning)
 
     else:
         return render_template("index.html", warning=warning)
@@ -234,6 +234,15 @@ def register():
             errors.clear()
 
             if request.form.get('email') in verified_emails:
+
+                # with smtplib.SMTP('smtp.gmail.com', 587) as connection:
+                #     connection.starttls()
+                #     connection.login(MY_EMAIL, MY_PASSWORD)
+                #     connection.sendmail(from_addr=MY_EMAIL,
+                #                         to_addrs=request.form.get('email'),
+                #                         msg=f"Subject:WELCOME TO SENA CAREER INSTITUTE\n\nWelcome "
+                #                             f"{request.form.get('name')}! Happy to see you with us."
+                #                             f" Thanks for supporting us! Keep rocking!".encode('utf-8'))
 
                 db.session.add(new_user)
                 db.session.commit()
@@ -285,77 +294,61 @@ def login():
 
 
 @app.route("/exam", methods=["GET", "POST"])
-@login_required
 def exam():
-    if current_user.is_authenticated:
 
-        if request.method == "GET" and request.args.get("submit") == "True":
-            answers = []
-            final_result = []
-            marks = 0
+    if request.method == "GET" and request.args.get("submit") == "True":
+        answers = []
+        final_result = []
+        marks = 0
 
-            for i in range(0, 3):
-                user_answer = request.args.get(f'answers{i}')
+        for i in range(0, 3):
+            user_answer = request.args.get(f'answers{i}')
 
-                if user_answer is None:
-                    answers.append("None")
-
-                else:
-                    answers.append(user_answer)
-
-            for j in range(len(correct_answer)):
-
-                if answers[j] == correct_answer[j]:
-                    marks += 1
-                    final_result.append("Correct")
-
-                else:
-                    final_result.append("Wrong")
-
-            st_answers = '#||#'.join(answers)
-            f_result = "#||#".join(final_result)
-
-            new_examinee = Test15(
-                test_author=current_user,
-                user_answers=st_answers,
-                marks=marks,
-                final_result=f_result,
-                date=datetime.datetime.now(),
-            )
-
-            db.session.add(new_examinee)
-            db.session.commit()
-
-            if report15[f"{current_user.email}"][3] == "False":
-
-                report15.loc[3, f"{current_user.email}"] = "True"
-                report15.to_csv("report15.csv", index=False)
-
-                return redirect(url_for('home', warn="You have successfully completed the exam. Click results to see "
-                                                     "results."))
-
-            # else:
-            #     # return f'{report15[f"{current_user.email}"][3] == "False"}'
-            #     return redirect(url_for('home', warn="You have successfully completed the exam. Click results to see "
-            #                                          "results."))
-
-        else:
-            opentime = exam_sites[request.args.get("test_no")][0]
-            closetime = exam_sites[request.args.get("test_no")][1]
-
-            attended = report15[f"{current_user.email}"][3]
-
-            if attended == "False":
-                return render_template("exam.html", opentime=json.dumps(opentime),
-                                       closetime=json.dumps(closetime), sl_no=sl_no, ques=ques, a=a, b=b, c=c, d=d,
-                                       correct_answer=correct_answer)
+            if user_answer is None:
+                answers.append("None")
 
             else:
-                return redirect(
-                    url_for("home", warn="You have already committed this exam. Check the results instead."))
+                answers.append(user_answer)
+
+        for j in range(len(correct_answer)):
+
+            if answers[j] == correct_answer[j]:
+                marks += 1
+                final_result.append("Correct")
+
+            else:
+                final_result.append("Wrong")
+
+        st_answers = '#||#'.join(answers)
+        f_result = "#||#".join(final_result)
+
+        new_examinee = Test15(
+            test_author=current_user,
+            user_answers=st_answers,
+            marks=marks,
+            final_result=f_result,
+            user_name=current_user.username,
+            date=datetime.datetime.now()
+        )
+
+        db.session.add(new_examinee)
+        db.session.commit()
+
+        return redirect(url_for('home', warn="You have successfully completed the exam. Click results to see results."))
 
     else:
-        return redirect(url_for('login', msg="You need to login to take test"))
+        exam_url = exam_sites[request.args.get("test_no")][0]
+        opentime = exam_sites[request.args.get("test_no")][1]
+        closetime = exam_sites[request.args.get("test_no")][2]
+
+        attended = Test15.query.filter_by(user_id=current_user.user_id).first()
+
+        if attended is None:
+            return render_template("exam.html", url=json.dumps(exam_url).replace('"', ''), opentime=json.dumps(opentime),
+                                   closetime=json.dumps(closetime), sl_no=sl_no, ques=ques, a=a, b=b, c=c, d=d,
+                                   correct_answer=correct_answer, answers=[])
+        else:
+            return redirect(url_for("home", warn="You have already committed this exam. Check the results instead."))
 
 
 @app.route("/result", methods=["GET", "POST"])
@@ -367,17 +360,25 @@ def result():
     marks = attended_student.marks
     time = attended_student.date
 
-    return render_template("results.html", answers=answers, marks=marks, sl_no=sl_no, ques=ques, a=a, b=b, c=c, d=d,
+    return render_template("results.html", answers=answers, marks=marks,  sl_no=sl_no, ques=ques, a=a, b=b, c=c, d=d,
                            correct_answer=correct_answer, final_result=final_result, time=time)
 
 
 @app.route("/dashboard")
 def dashboard():
-    student_names = [i for i in report15.values[0][1:]]
-    student_marks = [j for j in report15.values[1][1:]]
-    student_time = [k for k in report15.values[2][1:]]
+    all_record = Test15.query.all()
 
-    return render_template("dashboard.html", names=student_names, times=student_time, marks=student_marks)
+    # if len(all_record) == len(student_mails) - 3:
+
+    for v in range(1, len(all_record)):
+        examinee_details = User.query.get(v)
+        all_record.append(examinee_details)
+
+    return render_template("dashboard.html", all_record=all_record)
+
+    # else:
+    #     return redirect(
+    #         url_for('home', warn="Dashboard will be available only after all the students complete the exams."))
 
 
 @app.route("/change_details", methods=["GET", "POST"])
@@ -444,6 +445,26 @@ def new_admission():
 
         db.session.add(new_member)
         db.session.commit()
+
+        verification_code = random.randint(2000, 10000)
+
+        with smtplib.SMTP('smtp.gmail.com', 587) as connection:
+            connection.starttls()
+            connection.login(MY_EMAIL, MY_PASSWORD)
+            connection.sendmail(from_addr=MY_EMAIL,
+                                to_addrs=request.form.get('email'),
+                                msg=f"Subject:WELCOME TO SENA CAREER INSTITUTE\n\nWelcome {request.form.get('name')}!"
+                                    f" Happy to see you with us. Thanks for supporting us! Keep rocking! "
+                                    f"Here is our Educators' number: 8610642720".encode('utf-8'))
+
+        with smtplib.SMTP('smtp.gmail.com', 587) as connection:
+            connection.starttls()
+            connection.login(MY_EMAIL, MY_PASSWORD)
+            connection.sendmail(from_addr=MY_EMAIL,
+                                to_addrs=MY_EMAIL,
+                                msg=f"Subject:NEW ADMISSION\n\n{request.form.get('name')} has made an "
+                                    f"admission sign up on Sena site Here is details {request.form.get('name')},"
+                                    f" {request.form.get('number')}, {request.form.get('email')}!")
 
         return redirect(url_for('home'))
 
