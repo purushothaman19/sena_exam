@@ -372,10 +372,12 @@ def result():
 
 @app.route("/dashboard")
 def dashboard():
-    all_record = Test15.query.all()
 
-    return render_template("dashboard.html", all_record=all_record)
+    student_names = [i for i in report15.values[0][1:]]
+    student_marks = [j for j in report15.values[1][1:]]
+    student_time = [k for k in report15.values[2][1:]]
 
+    return render_template("dashboard.html", marks=student_marks, names=student_names, time=student_time)
 
 
 @app.route("/change_details", methods=["GET", "POST"])
