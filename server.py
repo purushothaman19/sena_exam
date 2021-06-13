@@ -754,7 +754,6 @@ def evaluate():
         else:
             answers.append(user_answer)
 
-    return f'{answers}'
     for j in range(len(correct_answer)):
 
         if answers[j] == correct_answer[j]:
@@ -764,6 +763,7 @@ def evaluate():
         else:
             final_result.append("Wrong")
 
+    return f"{final_result}"
     st_answers = '#||#'.join(answers)
     f_result = "#||#".join(final_result)
 
