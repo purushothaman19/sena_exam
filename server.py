@@ -189,7 +189,8 @@ def home():
                                        completed=completed)
 
             else:
-                return render_template("index.html", fee=True, name=name, bending=bending, logged_in=logged_in)
+                return render_template("index.html", fee=True, name=name, bending=bending, logged_in=logged_in,
+                                       completed=completed)
 
         else:
 
@@ -199,7 +200,7 @@ def home():
                 return render_template("index.html", warning=warning, completed=completed)
 
             else:
-                return render_template("index.html", warning=warning)
+                return render_template("index.html", warning=warning, completed=completed)
 
     else:
         return render_template("index.html", warning=warning)
