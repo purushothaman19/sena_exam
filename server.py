@@ -196,7 +196,6 @@ def home():
             completed = report15[current_user.email][3]
 
             if completed == "True":
-                completed = Test15.query.filter_by(examinee_id=current_user.user_id).first()
                 return render_template("index.html", warning=warning, completed=completed)
 
             else:
