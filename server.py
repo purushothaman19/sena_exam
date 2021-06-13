@@ -740,49 +740,49 @@ def exam():
 
 @app.route('/evaluate', methods=["GET", "POST"])
 def evaluate():
-    if request.args.get("submit") == "True":
-        answers = []
-        final_result = []
-        marks = 0
 
-        for i in range(0, 200):
-            user_answer = request.form[f'answers{i}']
+    answers = []
+    final_result = []
+    marks = 0
 
-            if user_answer is None:
-                answers.append("None")
+    for i in range(0, 200):
+        user_answer = request.form[f'answers{i}']
 
-            else:
-                answers.append(user_answer)
+        if user_answer is None:
+            answers.append("None")
 
-        for j in range(len(correct_answer)):
+        else:
+            answers.append(user_answer)
 
-            if answers[j] == correct_answer[j]:
-                marks += 1
-                final_result.append("Correct")
+    for j in range(len(correct_answer)):
 
-            else:
-                final_result.append("Wrong")
+        if answers[j] == correct_answer[j]:
+            marks += 1
+            final_result.append("Correct")
 
-        st_answers = '#||#'.join(answers)
-        f_result = "#||#".join(final_result)
+        else:
+            final_result.append("Wrong")
 
-        new_examinee = Test15(
-            test_author=current_user,
-            user_answers=st_answers,
-            marks=marks,
-            final_result=f_result,
-            date=datetime.datetime.now()
-        )
+    st_answers = '#||#'.join(answers)
+    f_result = "#||#".join(final_result)
 
-        db.session.add(new_examinee)
-        db.session.commit()
+    new_examinee = Test15(
+        test_author=current_user,
+        user_answers=st_answers,
+        marks=marks,
+        final_result=f_result,
+        date=datetime.datetime.now()
+    )
 
-        if current_user.email in report15.keys():
-            report15.loc[1, current_user.email] = marks
-            report15.loc[2, current_user.email] = datetime.datetime.now()
-            report15.to_csv("report15.csv", index=False)
+    db.session.add(new_examinee)
+    db.session.commit()
 
-        return redirect(url_for('home', warn="You have successfully completed the exam. Click results to see results."))
+    if current_user.email in report15.keys():
+        report15.loc[1, current_user.email] = marks
+        report15.loc[2, current_user.email] = datetime.datetime.now()
+        report15.to_csv("report15.csv", index=False)
+
+    return redirect(url_for('home', warn="You have successfully completed the exam. Click results to see results."))
 
 
 @app.route("/result", methods=["GET", "POST"])
