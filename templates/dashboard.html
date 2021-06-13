@@ -22,7 +22,7 @@
       </thead>
 
        {% set i = namespace(value=1) %}
-
+        {{ student_time | length }}
         {% for i in range(student_time | length) %}
           <tbody>
             <tr>
