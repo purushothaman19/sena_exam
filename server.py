@@ -321,8 +321,7 @@ def exam():
                 user_answers=st_answers,
                 marks=marks,
                 final_result=f_result,
-                user_name=current_user.username,
-                date=datetime.datetime.now()
+                date=datetime.datetime.now(),
             )
 
             db.session.add(new_examinee)
