@@ -331,8 +331,11 @@ def exam():
                 report15.loc[3, f"{current_user.email}"] = "True"
                 report15.to_csv("report15.csv", index=False)
 
+                return redirect(url_for('home', warn="You have successfully completed the exam. Click results to see "
+                                                     "results."))
+
             else:
-                return f'{report15[f"{current_user.email}"][3] == "False"}'
+                # return f'{report15[f"{current_user.email}"][3] == "False"}'
                 return redirect(url_for('home', warn="You have successfully completed the exam. Click results to see "
                                                      "results."))
 
