@@ -184,7 +184,7 @@ def home():
 
             completed = report15[current_user.email][3]
 
-            if completed:
+            if completed == "True":
                 return render_template("index.html", fee=True, name=name, bending=bending, logged_in=logged_in,
                                        completed=completed)
 
