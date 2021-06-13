@@ -327,7 +327,13 @@ def exam():
             db.session.add(new_examinee)
             db.session.commit()
 
-            return redirect(url_for('home', warn="You have successfully completed the exam. Click results to see results."))
+            if report15[current_user.email][3] == "False":
+
+                data.loc[3, current_user.email] = True
+                data.to_csv("report15.csv", index=False)
+
+            return redirect(url_for('home', warn="You have successfully completed the exam. Click results to see "
+                                                 "results."))
 
         else:
             opentime = exam_sites[request.args.get("test_no")][0]
