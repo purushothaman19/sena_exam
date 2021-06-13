@@ -33,6 +33,8 @@
 											<li><a href="{{ url_for('register') }}" class="button alt large icon solid fa-registered">Register</a></li>
 										{% endif %}
 
+									{% else %}
+										<li><a href="{{ url_for('home') }}"><img class="logo-img" src="static/assets/images/LOGO.png" style="filter: hue-rotate(312deg);"></a></li>
 									{% endif %}
 
 								</ul>
@@ -68,6 +70,7 @@
 											{% if completed %}
 											<a href="{{ url_for('result') }}"><button type="submit" style="margin-top: 10%;" class="btn btn-default">View Result</button></a>
 											{% endif %}
+
 										</div>
 									</section>
 							</div>
