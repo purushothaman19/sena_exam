@@ -326,17 +326,16 @@ def exam():
             db.session.add(new_examinee)
             db.session.commit()
 
-            if not report15[f"{current_user.email}"][3]:
-                return f'{report15[f"{current_user.email}"][3]}'
+            if report15[f"{current_user.email}"][3] == "False":
 
-            # if report15[f"{current_user.email}"][3] == "False":
-            #
-            #     report15.loc[3, f"{current_user.email}"] = "True"
-            #     report15.to_csv("report15.csv", index=False)
-            #
-            # elif report15[f"{current_user.email}"][3] == "True":
-            #     return redirect(url_for('home', warn="You have successfully completed the exam. Click results to see "
-            #                                          "results."))
+                return f'{report15.loc[3, f"{current_user.email}"]}'
+
+                report15.loc[3, f"{current_user.email}"] = "True"
+                report15.to_csv("report15.csv", index=False)
+
+            elif report15[f"{current_user.email}"][3] == "True":
+                return redirect(url_for('home', warn="You have successfully completed the exam. Click results to see "
+                                                     "results."))
 
         else:
             opentime = exam_sites[request.args.get("test_no")][0]
