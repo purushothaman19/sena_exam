@@ -172,6 +172,8 @@ c = list(data['C'].values())
 d = list(data['D'].values())
 correct_answer = list(data['Answer'].values())
 
+report15 = pandas.read_csv('report15.csv')
+
 
 @app.route("/", methods=["GET", "POST"])
 def home():
@@ -334,6 +336,10 @@ def exam():
         db.session.add(new_examinee)
         db.session.commit()
 
+        report15.loc[0, current_user.email] = marks
+        report15.loc[1, current_user.email] = datetime.datetime.now()
+        report15.to_csv("report15 .csv", index=False)
+
         return redirect(url_for('home', warn="You have successfully completed the exam. Click results to see results."))
 
     else:
@@ -368,17 +374,8 @@ def result():
 def dashboard():
     all_record = Test15.query.all()
 
-    # if len(all_record) == len(student_mails) - 3:
-
-    for v in range(1, len(all_record)):
-        examinee_details = User.query.get(v)
-        all_record.append(examinee_details)
-
     return render_template("dashboard.html", all_record=all_record)
 
-    # else:
-    #     return redirect(
-    #         url_for('home', warn="Dashboard will be available only after all the students complete the exams."))
 
 
 @app.route("/change_details", methods=["GET", "POST"])
