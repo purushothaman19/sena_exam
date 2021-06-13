@@ -754,6 +754,7 @@ def evaluate():
         else:
             answers.append(user_answer)
 
+    return answers
     for j in range(len(correct_answer)):
 
         if answers[j] == correct_answer[j]:
