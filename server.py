@@ -339,9 +339,9 @@ def exam():
             opentime = exam_sites[request.args.get("test_no")][0]
             closetime = exam_sites[request.args.get("test_no")][1]
 
-            attended = Test15.query.filter_by(user_id=current_user.user_id).first()
+            attended = report15[f"{current_user.email}"][3]
 
-            if attended is None:
+            if attended == "False":
                 return render_template("exam.html", opentime=json.dumps(opentime),
                                        closetime=json.dumps(closetime), sl_no=sl_no, ques=ques, a=a, b=b, c=c, d=d,
                                        correct_answer=correct_answer)
