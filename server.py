@@ -236,15 +236,6 @@ def register():
 
             if request.form.get('email') in verified_emails:
 
-                # with smtplib.SMTP('smtp.gmail.com', 587) as connection:
-                #     connection.starttls()
-                #     connection.login(MY_EMAIL, MY_PASSWORD)
-                #     connection.sendmail(from_addr=MY_EMAIL,
-                #                         to_addrs=request.form.get('email'),
-                #                         msg=f"Subject:WELCOME TO SENA CAREER INSTITUTE\n\nWelcome "
-                #                             f"{request.form.get('name')}! Happy to see you with us."
-                #                             f" Thanks for supporting us! Keep rocking!".encode('utf-8'))
-
                 db.session.add(new_user)
                 db.session.commit()
 
@@ -344,7 +335,7 @@ def exam():
         opentime = exam_sites[request.args.get("test_no")][1]
         closetime = exam_sites[request.args.get("test_no")][2]
 
-        attended = Test15.query.filter_by(user_id=current_user.user_id).first()
+        attended = Test15.query.filter_by(examinee_id=current_user.user_id).first()
 
         if attended is None:
             return render_template("exam.html", url=json.dumps(exam_url).replace('"', ''),
