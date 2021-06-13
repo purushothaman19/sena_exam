@@ -328,8 +328,6 @@ def exam():
 
             if report15[f"{current_user.email}"][3] == "False":
 
-                return f'{report15.loc[3, f"{current_user.email}"]}'
-
                 report15.loc[3, f"{current_user.email}"] = "True"
                 report15.to_csv("report15.csv", index=False)
 
