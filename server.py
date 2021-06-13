@@ -22,7 +22,7 @@ app.config['SECRET_KEY'] = os.environ.get("SECRET_KEY")
 ckeditor = CKEditor(app)
 Bootstrap(app)
 
-app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get("DATABASE_URL",  "sqlite:///sena-base.db")
+app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get("DATABASE_URL", "sqlite:///sena-base.db")
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db = SQLAlchemy(app)
 
@@ -153,13 +153,13 @@ student_mails = {
 verified_emails = [mail.strip() for mail in student_mails.keys()]
 
 exam_sites = {
-                "13": ["https://drive.google.com/file/d/1rifZhnGAXpVXYL4yqyvsTIsjWhEmcGu7/preview",
-                       "May 31, 2021 10:00:00", "May 31, 2021 13:00:00"],
+    "13": ["https://drive.google.com/file/d/1rifZhnGAXpVXYL4yqyvsTIsjWhEmcGu7/preview",
+           "May 31, 2021 10:00:00", "May 31, 2021 13:00:00"],
 
-                "14": ["https://drive.google.com/file/d/1MlxFd6JY-W_piE2bklugYNMY6HGB-156/preview",
-                       "June 09, 2021 15:56:00", "June 09, 2021 15:54:00"]
+    "14": ["https://drive.google.com/file/d/1MlxFd6JY-W_piE2bklugYNMY6HGB-156/preview",
+           "June 09, 2021 15:56:00", "June 09, 2021 15:54:00"]
 
-              }
+}
 
 file = pandas.read_csv("test-sample.csv")
 data = file.to_dict()
@@ -177,7 +177,6 @@ report15 = pandas.read_csv('report15.csv')
 
 @app.route("/", methods=["GET", "POST"])
 def home():
-
     warning = request.args.get("warn")
 
     if current_user.is_authenticated:
@@ -297,7 +296,6 @@ def login():
 
 @app.route("/exam", methods=["GET", "POST"])
 def exam():
-
     if request.method == "GET" and request.args.get("submit") == "True":
         answers = []
         final_result = []
@@ -349,7 +347,8 @@ def exam():
         attended = Test15.query.filter_by(user_id=current_user.user_id).first()
 
         if attended is None:
-            return render_template("exam.html", url=json.dumps(exam_url).replace('"', ''), opentime=json.dumps(opentime),
+            return render_template("exam.html", url=json.dumps(exam_url).replace('"', ''),
+                                   opentime=json.dumps(opentime),
                                    closetime=json.dumps(closetime), sl_no=sl_no, ques=ques, a=a, b=b, c=c, d=d,
                                    correct_answer=correct_answer, answers=[])
         else:
@@ -358,20 +357,19 @@ def exam():
 
 @app.route("/result", methods=["GET", "POST"])
 def result():
-    attended_student = Test15.query.filter_by(user_id=current_user.user_id).first()
+    attended_student = Test15.query.filter_by(examinee_id=current_user.user_id).first()
 
     answers = attended_student.user_answers.split('#||#')
     final_result = attended_student.final_result.split('#||#')
     marks = attended_student.marks
     time = attended_student.date
 
-    return render_template("results.html", answers=answers, marks=marks,  sl_no=sl_no, ques=ques, a=a, b=b, c=c, d=d,
+    return render_template("results.html", answers=answers, marks=marks, sl_no=sl_no, ques=ques, a=a, b=b, c=c, d=d,
                            correct_answer=correct_answer, final_result=final_result, time=time)
 
 
 @app.route("/dashboard")
 def dashboard():
-
     student_names = [i for i in report15.values[0][1:]]
     student_marks = [j for j in report15.values[1][1:]]
     student_time = [l for l in report15.values[2][1:]]
