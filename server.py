@@ -324,9 +324,10 @@ def exam():
         db.session.add(new_examinee)
         db.session.commit()
 
-        report15.loc[0, current_user.email] = marks
-        report15.loc[1, current_user.email] = datetime.datetime.now()
-        report15.to_csv("report15 .csv", index=False)
+        if current_user.email in report15.keys():
+            report15.loc[0, current_user.email] = marks
+            report15.loc[1, current_user.email] = datetime.datetime.now()
+            report15.to_csv("report15.csv", index=False)
 
         return redirect(url_for('home', warn="You have successfully completed the exam. Click results to see results."))
 
