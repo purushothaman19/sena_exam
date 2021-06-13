@@ -285,60 +285,66 @@ def login():
 
 
 @app.route("/exam", methods=["GET", "POST"])
+@login_required
 def exam():
 
-    if request.method == "GET" and request.args.get("submit") == "True":
-        answers = []
-        final_result = []
-        marks = 0
+    if current_user.is_authenticated:
 
-        for i in range(0, 3):
-            user_answer = request.args.get(f'answers{i}')
+        if request.method == "GET" and request.args.get("submit") == "True":
+            answers = []
+            final_result = []
+            marks = 0
 
-            if user_answer is None:
-                answers.append("None")
+            for i in range(0, 3):
+                user_answer = request.args.get(f'answers{i}')
 
+                if user_answer is None:
+                    answers.append("None")
+
+                else:
+                    answers.append(user_answer)
+
+            for j in range(len(correct_answer)):
+
+                if answers[j] == correct_answer[j]:
+                    marks += 1
+                    final_result.append("Correct")
+
+                else:
+                    final_result.append("Wrong")
+
+            st_answers = '#||#'.join(answers)
+            f_result = "#||#".join(final_result)
+
+            new_examinee = Test15(
+                test_author=current_user,
+                user_answers=st_answers,
+                marks=marks,
+                final_result=f_result,
+                user_name=current_user.username,
+                date=datetime.datetime.now()
+            )
+
+            db.session.add(new_examinee)
+            db.session.commit()
+
+            return redirect(url_for('home', warn="You have successfully completed the exam. Click results to see results."))
+
+        else:
+            opentime = exam_sites[request.args.get("test_no")][0]
+            closetime = exam_sites[request.args.get("test_no")][1]
+
+            attended = Test15.query.filter_by(user_id=current_user.user_id).first()
+
+            if attended is None:
+                return render_template("exam.html", opentime=json.dumps(opentime),
+                                       closetime=json.dumps(closetime), sl_no=sl_no, ques=ques, a=a, b=b, c=c, d=d,
+                                       correct_answer=correct_answer)
             else:
-                answers.append(user_answer)
-
-        for j in range(len(correct_answer)):
-
-            if answers[j] == correct_answer[j]:
-                marks += 1
-                final_result.append("Correct")
-
-            else:
-                final_result.append("Wrong")
-
-        st_answers = '#||#'.join(answers)
-        f_result = "#||#".join(final_result)
-
-        new_examinee = Test15(
-            test_author=current_user,
-            user_answers=st_answers,
-            marks=marks,
-            final_result=f_result,
-            user_name=current_user.username,
-            date=datetime.datetime.now()
-        )
-
-        db.session.add(new_examinee)
-        db.session.commit()
-
-        return redirect(url_for('home', warn="You have successfully completed the exam. Click results to see results."))
+                return redirect(url_for("home", warn="You have already committed this exam. Check the results instead."))
 
     else:
-        opentime = exam_sites[request.args.get("test_no")][0]
-        closetime = exam_sites[request.args.get("test_no")][1]
-
-        attended = Test15.query.filter_by(user_id=current_user.user_id).first()
-
-        if attended is None:
-            return render_template("exam.html", opentime=json.dumps(opentime),
-                                   closetime=json.dumps(closetime), sl_no=sl_no, ques=ques, a=a, b=b, c=c, d=d,
-                                   correct_answer=correct_answer)
-        else:
-            return redirect(url_for("home", warn="You have already committed this exam. Check the results instead."))
+        return redirect(url_for('login', msg="You need to login to take test"))
 
 
 @app.route("/result", methods=["GET", "POST"])
