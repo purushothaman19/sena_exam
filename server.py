@@ -727,7 +727,7 @@ def login():
 
 @app.route("/exam", methods=["GET", "POST"])
 def exam():
-    test_no = request.args.get("test_no")
+    test_no = request.args.get("test_no").replace('"', '')
     opentime = exam_sites[request.args.get("test_no")][0]
     closetime = exam_sites[request.args.get("test_no")][1]
 
@@ -798,6 +798,7 @@ def evaluate():
 def result():
     test_no = request.args.get("test_no").replace('"', '')
 
+    return type(Test15)
     attended_student = test_no.query.filter_by(examinee_id=current_user.user_id).first()
 
     answers = attended_student.user_answers.split('#||#')
