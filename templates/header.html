@@ -46,9 +46,9 @@
 
 									{% if current_user.is_authenticated %}
 									<li><a href="{{ url_for('logout') }}">Log-Out</a></li>
-									{% if current_user.email == "jamespurysh@gmail.com" or "sivagangainagarajan@gmail.com" or "gangadha91@gmail.com" %}
-									<li><a href="{{ url_for('dashboard') }}">Dashboard</a></li>
-									{% endif %}
+										{% if (current_user.email == "jamespurysh@gmail.com") or ( current_user.email == "sivagangainagarajan@gmail.com")  or ( current_user.email == "gangadha91@gmail.com") %}
+											<li><a href="{{ url_for('dashboard') }}">Dashboard</a></li>
+										{% endif %}
 
 									{% else %}
 									<li><a href="{{ url_for('login') }}">Login</a></li>
