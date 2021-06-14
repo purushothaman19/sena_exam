@@ -59,6 +59,7 @@ class User(UserMixin, db.Model):
     password = db.Column(db.String(100))
     username = db.Column(db.String(100))
     test = relationship("Test15", back_populates="test_author")
+    test = relationship("Test16", back_populates="test_author")
 
     def get_id(self):
         return self.user_id
