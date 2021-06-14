@@ -64,10 +64,10 @@
 
 					  if (hours <= 0 && minutes <= 0 && seconds <= 0 ) {
 						  clearInterval(x);
+						  document.getElementById("submit-bt").click();
 						  document.getElementById("demo").style.display = "None";
 						  document.getElementById("main-wrapper").style.display = "None";
 						  document.getElementById("final").style.display = "block";
-						  document.getElementById("submit-bt").click();
 						  }
 
 					  else if( openHours <= 0 && openMinutes <= 0 && openSeconds <= 0   ) {
