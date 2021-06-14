@@ -75,6 +75,18 @@ class Test15(db.Model):
     date = db.Column(db.String(250), nullable=False)
 
 
+class Test16(db.Model):
+    __tablename__ = "Test_16"
+    user_id = db.Column(db.Integer, primary_key=True)
+    examinee_id = db.Column(db.Integer, db.ForeignKey("User.user_id"))
+    test_author = relationship("User", back_populates="test")
+    marks = db.Column(db.Integer)
+    examinee_name = db.Column(db.String())
+    user_answers = db.Column(db.String())
+    final_result = db.Column(db.String())
+    date = db.Column(db.String(250), nullable=False)
+
+
 class Admission(db.Model):
     __tablename__ = "New_Admission"
     user_id = db.Column(db.Integer, primary_key=True)
@@ -733,6 +745,8 @@ def exam():
 
 @app.route('/evaluate', methods=["GET", "POST"])
 def evaluate():
+
+    test_no = request.args.get("test_no")
     answers = []
     final_result = []
     marks = 0
@@ -763,7 +777,7 @@ def evaluate():
     actual_time = datetime.datetime.now()
     s_time = actual_time.strftime('%Y-%m-%d %H:%M:%S.%f')
 
-    new_examinee = Test15(
+    new_examinee = test_no(
         test_author=current_user,
         user_answers=st_answers,
         marks=marks,
@@ -784,7 +798,9 @@ def evaluate():
 
 @app.route("/result", methods=["GET", "POST"])
 def result():
-    attended_student = Test15.query.filter_by(examinee_id=current_user.user_id).first()
+    test_no = request.args.get("test_no")
+
+    attended_student = test_no.query.filter_by(examinee_id=current_user.user_id).first()
 
     answers = attended_student.user_answers.split('#||#')
     final_result = attended_student.final_result.split('#||#')
