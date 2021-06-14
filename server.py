@@ -781,7 +781,7 @@ def evaluate():
     actual_time = datetime.datetime.now()
     s_time = actual_time.strftime('%Y-%m-%d %H:%M:%S.%f')
 
-    if test_no == 15:
+    if test_no == "15":
         new_examinee = Test15(
             test_author=current_user,
             user_answers=st_answers,
@@ -790,7 +790,7 @@ def evaluate():
             date=s_time[:-7],
         )
 
-    if test_no == 16:
+    if test_no == "16":
         new_examinee = Test16(
             test_author=current_user,
             user_answers=st_answers,
@@ -814,7 +814,7 @@ def evaluate():
 def result():
     test_no = request.args.get("test_no")
 
-    if test_no == 15:
+    if test_no == "15":
         attended_student = Test15.query.filter_by(examinee_id=current_user.user_id).first()
 
         answers = attended_student.user_answers.split('#||#')
@@ -825,7 +825,7 @@ def result():
         return render_template("results.html", answers=answers, marks=marks, sl_no=sl_no, ques=ques, a=a, b=b, c=c, d=d,
                                correct_answer=correct_answer, final_result=final_result, time=time)
 
-    elif test_no == 16:
+    elif test_no == "16":
         attended_student = Test16.query.filter_by(examinee_id=current_user.user_id).first()
 
         answers = attended_student.user_answers.split('#||#')
