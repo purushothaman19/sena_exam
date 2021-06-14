@@ -155,7 +155,7 @@ verified_emails = [mail.strip() for mail in student_mails.keys()]
 
 exam_sites = {
 
-    "15": ["June 14, 2021 10:00:00", "June 09, 2021 13:30:00"]
+    "15": ["June 14, 2021 10:00:00", "June 14, 2021 13:30:00"]
 
 }
 
