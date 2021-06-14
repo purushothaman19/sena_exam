@@ -154,11 +154,8 @@ student_mails = {
 verified_emails = [mail.strip() for mail in student_mails.keys()]
 
 exam_sites = {
-    "13": ["https://drive.google.com/file/d/1rifZhnGAXpVXYL4yqyvsTIsjWhEmcGu7/preview",
-           "May 31, 2021 10:00:00", "May 31, 2021 13:00:00"],
 
-    "14": ["https://drive.google.com/file/d/1MlxFd6JY-W_piE2bklugYNMY6HGB-156/preview",
-           "June 09, 2021 15:56:00", "June 09, 2021 15:54:00"]
+    "15": ["June 14, 2021 10:00:00", "June 09, 2021 13:30:00"]
 
 }
 
@@ -617,22 +614,18 @@ def home():
     warning = request.args.get("warn")
 
     if current_user.is_authenticated:
+        completed = Test15.query.filter_by(examinee_id=current_user.user_id).first()
 
         if request.args.get("fee"):
             name = request.args.get("name")
             bending = request.args.get("bending")
             logged_in = request.args.get("logged_in")
 
-            if Test15.query.filter_by(examinee_id=current_user.user_id).first():
-                completed = Test15.query.filter_by(user_id=current_user.user_id).first()
-                return render_template("index.html", fee=True, name=name, bending=bending, logged_in=logged_in,
-                                       completed=completed)
-
-            else:
-                return render_template("index.html", fee=True, name=name, bending=bending, logged_in=logged_in)
+            return render_template("index.html", fee=True, name=name, bending=bending, logged_in=logged_in,
+                                   completed=completed)
 
         else:
-            if Test15.query.filter_by(examinee_id=current_user.user_id).first():
+            if completed:
                 completed = Test15.query.filter_by(examinee_id=current_user.user_id).first()
                 return render_template("index.html", warning=warning, completed=completed)
 
@@ -725,17 +718,15 @@ def login():
 @app.route("/exam", methods=["GET", "POST"])
 def exam():
     if current_user.is_authenticated:
-        exam_url = exam_sites[request.args.get("test_no")][0]
-        opentime = exam_sites[request.args.get("test_no")][1]
-        closetime = exam_sites[request.args.get("test_no")][2]
+        opentime = exam_sites[request.args.get("test_no")][0]
+        closetime = exam_sites[request.args.get("test_no")][1]
 
         attended = Test15.query.filter_by(examinee_id=current_user.user_id).first()
 
         if attended is None:
-            return render_template("exam.html", url=json.dumps(exam_url).replace('"', ''),
-                                   opentime=json.dumps(opentime),
-                                   closetime=json.dumps(closetime), sl_no=sl_no, ques=ques, a=a, b=b, c=c, d=d,
-                                   correct_answer=correct_answer, answers=[])
+            return render_template("exam.html", opentime=json.dumps(opentime), closetime=json.dumps(closetime),
+                                   sl_no=sl_no, ques=ques, a=a, b=b, c=c, d=d, correct_answer=correct_answer,
+                                   answers=[])
         else:
             return redirect(url_for("home", warn="You have already committed this exam. Check the results instead."))
 
@@ -745,7 +736,6 @@ def exam():
 
 @app.route('/evaluate', methods=["GET", "POST"])
 def evaluate():
-
     answers = []
     final_result = []
     marks = 0
@@ -773,12 +763,15 @@ def evaluate():
     st_answers = '#||#'.join(answers)
     f_result = "#||#".join(final_result)
 
+    actual_time = datetime.datetime.now()
+    s_time = actual_time.strftime('%Y-%m-%d %H:%M:%S.%f')
+
     new_examinee = Test15(
         test_author=current_user,
         user_answers=st_answers,
         marks=marks,
         final_result=f_result,
-        date=datetime.datetime.now()
+        date=s_time[:-7],
     )
 
     db.session.add(new_examinee)
