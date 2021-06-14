@@ -731,12 +731,11 @@ def exam():
     test_no = request.args.get("test_no")
     opentime = exam_sites[request.args.get("test_no")][0]
     closetime = exam_sites[request.args.get("test_no")][1]
-    return f"{type(test_no)}"
 
-    if test_no == 15:
+    if test_no == "15":
         attended = Test15.query.filter_by(examinee_id=current_user.user_id).first()
 
-    elif test_no == 16:
+    elif test_no == "16":
         attended = Test16.query.filter_by(examinee_id=current_user.user_id).first()
 
     if attended is None:
