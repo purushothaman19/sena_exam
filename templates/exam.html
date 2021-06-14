@@ -30,28 +30,6 @@
 						color: red;
 						}
 
-					#ans-area p{
-						text-align: left;
-						}
-
-					input[type="radio"]{
-							-webkit-appearance: radio;
-						}
-
-					.options{
-						padding-right: 1%;
-						text-align: justify;
-						}
-
-
-					#ques-row{
-						text-align: center;
-						}
-
-					#reveal{
-						display: none;
-						}
-
 					.final-answers{
 						display: none;
 						}
@@ -86,7 +64,7 @@
 
 					  if (hours <= 0 && minutes <= 0 && seconds <= 0 ) {
 						  clearInterval(x);
-						  document.getElementById("demo").style.display = "None";
+						  // document.getElementById("demo").style.display = "None";
 						  document.getElementById("main-wrapper").style.display = "None";
 						  document.getElementById("final").style.display = "block";
 						  document.getElementById("demo").innerHTML = "1";
@@ -112,7 +90,7 @@
 				</div>
 
 
-				<p style="font-size:1.5rem" id="demo">{{ closetime }} {{ opentime }}</p>
+				<p style="font-size:1.5rem" id="demo"></p>
 
 				<div id="main-wrapper">
 					<div class="container">
