@@ -796,9 +796,8 @@ def evaluate():
 
 @app.route("/result", methods=["GET", "POST"])
 def result():
-    test_no = request.args.get("test_no")
+    test_no = request.args.get("test_no").escape_string()
 
-    return f"{type(Test15)}"
     attended_student = test_no.query.filter_by(examinee_id=current_user.user_id).first()
 
     answers = attended_student.user_answers.split('#||#')
