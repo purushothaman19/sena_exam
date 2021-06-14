@@ -26,12 +26,24 @@
             <tr>
               <th scope="row">{{ i+1 }}</th>
               <td>{{ names[i] }}</td>
-              <td>{{ nmarks[i] }}</td>
-              <td>{{ ntime[i] }}</td>
+              <td>{{ marks[i] }}</td>
+              <td>{{ times[i] }}</td>
             </tr>
 
         </tbody>
         {% endfor %}
+
+<!--       {% for i in range(times | length) %}-->
+<!--          <tbody>-->
+<!--            <tr>-->
+<!--              <th scope="row">{{ i+1 }}</th>-->
+<!--              <td>{{ names[i] }}</td>-->
+<!--              <td>{{ nmarks[i] }}</td>-->
+<!--              <td>{{ ntime[i] }}</td>-->
+<!--            </tr>-->
+
+<!--        </tbody>-->
+<!--        {% endfor %}-->
     </table>
 
 {% include 'footer.html' %}
