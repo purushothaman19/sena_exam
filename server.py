@@ -779,7 +779,7 @@ def evaluate():
 
     if current_user.email in report15.keys():
         report15.loc[1, current_user.email] = marks
-        report15.loc[2, current_user.email] = datetime.datetime.now()
+        report15.loc[2, current_user.email] = s_time[:-7]
         report15.to_csv("report15.csv", index=False)
 
     return redirect(url_for('home', warn="You have successfully completed the exam. Click results to see results."))
