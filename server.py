@@ -727,11 +727,16 @@ def login():
 
 @app.route("/exam", methods=["GET", "POST"])
 def exam():
+    global attended
     test_no = request.args.get("test_no")
     opentime = exam_sites[request.args.get("test_no")][0]
     closetime = exam_sites[request.args.get("test_no")][1]
 
-    attended = Test15.query.filter_by(examinee_id=current_user.user_id).first()
+    if test_no == 15:
+        attended = Test15.query.filter_by(examinee_id=current_user.user_id).first()
+
+    elif test_no == 16:
+        attended = Test16.query.filter_by(examinee_id=current_user.user_id).first()
 
     if attended is None:
         return render_template("exam.html", opentime=json.dumps(opentime), closetime=json.dumps(closetime),
@@ -744,6 +749,7 @@ def exam():
 @app.route('/evaluate', methods=["GET", "POST"])
 def evaluate():
 
+    global new_examinee
     test_no = request.args.get("test_no")
     answers = []
     final_result = []
@@ -775,13 +781,23 @@ def evaluate():
     actual_time = datetime.datetime.now()
     s_time = actual_time.strftime('%Y-%m-%d %H:%M:%S.%f')
 
-    new_examinee = test_no(
-        test_author=current_user,
-        user_answers=st_answers,
-        marks=marks,
-        final_result=f_result,
-        date=s_time[:-7],
-    )
+    if test_no == 15:
+        new_examinee = Test15(
+            test_author=current_user,
+            user_answers=st_answers,
+            marks=marks,
+            final_result=f_result,
+            date=s_time[:-7],
+        )
+
+    if test_no == 16:
+        new_examinee = Test16(
+            test_author=current_user,
+            user_answers=st_answers,
+            marks=marks,
+            final_result=f_result,
+            date=s_time[:-7],
+        )
 
     db.session.add(new_examinee)
     db.session.commit()
@@ -796,17 +812,29 @@ def evaluate():
 
 @app.route("/result", methods=["GET", "POST"])
 def result():
-    test_no = request.args.get("test_no").escape_string()
+    test_no = request.args.get("test_no")
 
-    attended_student = test_no.query.filter_by(examinee_id=current_user.user_id).first()
+    if test_no == 15:
+        attended_student = Test15.query.filter_by(examinee_id=current_user.user_id).first()
 
-    answers = attended_student.user_answers.split('#||#')
-    final_result = attended_student.final_result.split('#||#')
-    marks = attended_student.marks
-    time = attended_student.date
+        answers = attended_student.user_answers.split('#||#')
+        final_result = attended_student.final_result.split('#||#')
+        marks = attended_student.marks
+        time = attended_student.date
 
-    return render_template("results.html", answers=answers, marks=marks, sl_no=sl_no, ques=ques, a=a, b=b, c=c, d=d,
-                           correct_answer=correct_answer, final_result=final_result, time=time)
+        return render_template("results.html", answers=answers, marks=marks, sl_no=sl_no, ques=ques, a=a, b=b, c=c, d=d,
+                               correct_answer=correct_answer, final_result=final_result, time=time)
+
+    elif test_no == 16:
+        attended_student = Test16.query.filter_by(examinee_id=current_user.user_id).first()
+
+        answers = attended_student.user_answers.split('#||#')
+        final_result = attended_student.final_result.split('#||#')
+        marks = attended_student.marks
+        time = attended_student.date
+
+        return render_template("results.html", answers=answers, marks=marks, sl_no=sl_no, ques=ques, a=a, b=b, c=c, d=d,
+                               correct_answer=correct_answer, final_result=final_result, time=time)
 
 
 @app.route("/dashboard")
