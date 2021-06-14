@@ -59,7 +59,7 @@ class User(UserMixin, db.Model):
     password = db.Column(db.String(100))
     username = db.Column(db.String(100))
     test = relationship("Test15", back_populates="test_author")
-    test = relationship("Test16", back_populates="test_author")
+    test16 = relationship("Test16", back_populates="test_author")
 
     def get_id(self):
         return self.user_id
@@ -80,7 +80,7 @@ class Test16(db.Model):
     __tablename__ = "Test_16"
     user_id = db.Column(db.Integer, primary_key=True)
     examinee_id = db.Column(db.Integer, db.ForeignKey("User.user_id"))
-    test_author = relationship("User", back_populates="test")
+    test_author = relationship("User", back_populates="test16")
     marks = db.Column(db.Integer)
     examinee_name = db.Column(db.String())
     user_answers = db.Column(db.String())
@@ -727,21 +727,18 @@ def login():
 
 @app.route("/exam", methods=["GET", "POST"])
 def exam():
-    if current_user.is_authenticated:
-        opentime = exam_sites[request.args.get("test_no")][0]
-        closetime = exam_sites[request.args.get("test_no")][1]
+    test_no = request.args.get("test_no")
+    opentime = exam_sites[request.args.get("test_no")][0]
+    closetime = exam_sites[request.args.get("test_no")][1]
 
-        attended = Test15.query.filter_by(examinee_id=current_user.user_id).first()
+    attended = Test15.query.filter_by(examinee_id=current_user.user_id).first()
 
-        if attended is None:
-            return render_template("exam.html", opentime=json.dumps(opentime), closetime=json.dumps(closetime),
-                                   sl_no=sl_no, ques=ques, a=a, b=b, c=c, d=d, correct_answer=correct_answer,
-                                   answers=[])
-        else:
-            return redirect(url_for("home", warn="You have already committed this exam. Check the results instead."))
-
+    if attended is None:
+        return render_template("exam.html", opentime=json.dumps(opentime), closetime=json.dumps(closetime),
+                               sl_no=sl_no, ques=ques, a=a, b=b, c=c, d=d, correct_answer=correct_answer,
+                               answers=[], test_no=test_no)
     else:
-        return render_template('login.html', msg="You need to sign to continue this process!")
+        return redirect(url_for("home", warn="You have already committed this exam. Check the results instead."))
 
 
 @app.route('/evaluate', methods=["GET", "POST"])
