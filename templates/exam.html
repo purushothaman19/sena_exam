@@ -91,11 +91,15 @@
 						  document.getElementById("demo").style.display = "None";
 						  document.getElementById("main-wrapper").style.display = "None";
 						  document.getElementById("final").style.display = "block";
+						  					  	document.getElementById("demo").innerHTML = "Your exam will start in " + openHours + "h " + openMinutes + "m " + openSeconds + "s ";
+
 						  }
 
 					  else if( openHours <= 0 && openMinutes <= 0 && openSeconds <= 0   ) {
 						document.getElementById("demo").innerHTML = hours + "h " + minutes + "m " + seconds + "s ";
 					  	document.getElementById("main-wrapper").style.display = "block";
+					  						  	document.getElementById("demo").innerHTML = "Your exam will start in " + openHours + "h " + openMinutes + "m " + openSeconds + "s ";
+
 					  }
 
 					  else {
