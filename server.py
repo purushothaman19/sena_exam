@@ -800,11 +800,21 @@ def result():
 
 @app.route("/dashboard")
 def dashboard():
+    all_record = Test15.query.all()
+
+    nmarks = []
+    ntime = []
+
+    for record in all_record:
+        nmarks.append(record.marks)
+        ntime.append(record.date)
+
     student_names = [i for i in report15.values[0][1:]]
     student_marks = [j for j in report15.values[1][1:]]
     student_time = [l for l in report15.values[2][1:]]
 
-    return render_template("dashboard.html", marks=student_marks, names=student_names, times=student_time)
+    return render_template("dashboard.html", marks=student_marks, names=student_names, times=student_time,
+                           nmarks=nmarks, ntime=ntime)
 
 
 @app.route("/change_details", methods=["GET", "POST"])
