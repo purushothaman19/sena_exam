@@ -750,7 +750,6 @@ def exam():
 def evaluate():
 
     global new_examinee
-    test_no = request.args.get("test_no")
     answers = []
     final_result = []
     marks = 0
@@ -781,31 +780,17 @@ def evaluate():
     actual_time = datetime.datetime.now()
     s_time = actual_time.strftime('%Y-%m-%d %H:%M:%S.%f')
 
-    if test_no == "15":
-        new_examinee = Test15(
-            test_author=current_user,
-            user_answers=st_answers,
-            marks=marks,
-            final_result=f_result,
-            date=s_time[:-7],
-        )
-
-    if test_no == "16":
-        new_examinee = Test16(
-            test_author=current_user,
-            user_answers=st_answers,
-            marks=marks,
-            final_result=f_result,
-            date=s_time[:-7],
-        )
+    new_examinee = Test16(
+        test_author=current_user,
+        user_answers=st_answers,
+        marks=marks,
+        final_result=f_result,
+        date=s_time[:-7],
+        examinee_name=current_user.username
+    )
 
     db.session.add(new_examinee)
     db.session.commit()
-
-    if current_user.email in report15.keys():
-        report15.loc[1, current_user.email] = marks
-        report15.loc[2, current_user.email] = s_time[:-7]
-        report15.to_csv("report15.csv", index=False)
 
     return redirect(url_for('home', warn="You have successfully completed the exam. Click results to see results."))
 
@@ -839,21 +824,9 @@ def result():
 
 @app.route("/dashboard")
 def dashboard():
-    all_record = Test15.query.all()
+    all_record = Test16.query.all()
 
-    nmarks = []
-    ntime = []
-
-    for record in all_record:
-        nmarks.append(record.marks)
-        ntime.append(record.date)
-
-    student_names = [i for i in report15.values[0][1:]]
-    student_marks = [j for j in report15.values[1][1:]]
-    student_time = [l for l in report15.values[2][1:]]
-
-    return render_template("dashboard.html", marks=student_marks, names=student_names, times=student_time,
-                           nmarks=nmarks, ntime=ntime)
+    return render_template("dashboard.html", all_record=all_record)
 
 
 @app.route("/change_details", methods=["GET", "POST"])
