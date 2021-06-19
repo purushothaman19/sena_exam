@@ -37,10 +37,12 @@
        {% for record in all_record %}
           <tbody>
             <tr>
+                {% if record.examinee_name != "Purushothaman Ganesan" %}
               <th scope="row">{{ i.value + 1 }}</th>
               <td>{{ record.examinee_name }}</td>
               <td>{{ record.marks }}</td>
               <td>{{ record.date }}</td>
+                {% endif %}
             </tr>
           {% set i.value = i.value + 1 %}
 

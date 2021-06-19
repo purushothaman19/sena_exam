@@ -396,17 +396,19 @@ def evaluate():
     actual_time = datetime.datetime.now()
     s_time = actual_time.strftime('%Y-%m-%d %H:%M:%S.%f')
 
-    new_examinee = Test16(
-        test_author=current_user,
-        user_answers=st_answers,
-        marks=marks,
-        final_result=f_result,
-        date=s_time[:-7],
-        examinee_name=current_user.username
-    )
+    if current_user.email != "jamespurysh@gmail.com" or "gangadha91@gmail.com" or "sivagangainagarajan@gmail.com":
 
-    db.session.add(new_examinee)
-    db.session.commit()
+        new_examinee = Test16(
+            test_author=current_user,
+            user_answers=st_answers,
+            marks=marks,
+            final_result=f_result,
+            date=s_time[:-7],
+            examinee_name=current_user.username
+        )
+
+        db.session.add(new_examinee)
+        db.session.commit()
 
     return redirect(url_for('home', warn="You have successfully completed the exam. Click results to see results."))
 
