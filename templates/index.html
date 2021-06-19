@@ -76,6 +76,31 @@
 									</section>
 							</div>
 
+							<div class="col-4 col-12-medium">
+
+								<!-- Box -->
+									<section class="box feature" style="background: lavender;">
+										<div class="inner">
+											<header>
+												<h2><a href="{{ url_for('exam', test_no=16) }}">TEST NO.16</a></h2>
+												<p>21.06.2021</p>
+											</header>
+											<ul style="list-style-type:none;">
+												<li><strong>Syllabus</strong></li>
+												<li>* இந்திய பொருளாதாரத்தின் இயல்புகள் , சமூக பிரச்சனைகள் , மக்கள் தொகை , கல்வி , நல்வாழ்வு , வேலைவாய்ப்பு (ம )வறுமை</li>
+												<li>* வளங்கள் (ம) தொழிலகங்கள்</li>
+												<li>* கூட்டு (ம) பெருக்குத் தொடர் </li>
+<!--												<li>Unit 10 - இயற்கணிதம்</li>-->
+											</ul>
+<!--											{{completed}}-->
+											{% if completed %}
+											<a href="{{ url_for('result', test_no=16) }}"><button type="submit" style="margin-top: 10%;" class="btn btn-default">View Result</button></a>
+											{% endif %}
+
+										</div>
+									</section>
+							</div>
+
 
 						</div>
 					</div>
