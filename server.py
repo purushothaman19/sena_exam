@@ -358,6 +358,7 @@ def exam():
     return render_template("exam.html", opentime=json.dumps(opentime), closetime=json.dumps(closetime),
                            sl_no=sl_no, ques=ques, a=a, b=b, c=c, d=d, correct_answer=correct_answer,
                            answers=[], test_no=test_no)
+
     # else:
     #     return redirect(url_for("home", warn="You have already committed this exam. Check the results instead."))
 
