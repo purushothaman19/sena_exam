@@ -302,7 +302,7 @@ def register():
                                         bending=student_mails[request.form.get('email')][1]))
 
             else:
-                return redirect(url_for('home', warn=True))
+                return redirect(url_for('home', warn="You are not authorised to use this website."))
 
     return render_template("register.html", form=form)
 
