@@ -354,13 +354,12 @@ def exam():
     elif test_no == "16":
         attended = Test16.query.filter_by(examinee_id=current_user.user_id).first()
 
-    # if attended is None:
-    return render_template("exam.html", opentime=json.dumps(opentime), closetime=json.dumps(closetime),
-                           sl_no=sl_no, ques=ques, a=a, b=b, c=c, d=d, correct_answer=correct_answer,
-                           answers=[], test_no=test_no)
-
-    # else:
-    #     return redirect(url_for("home", warn="You have already committed this exam. Check the results instead."))
+    if attended is None:
+        return render_template("exam.html", opentime=json.dumps(opentime), closetime=json.dumps(closetime),
+                               sl_no=sl_no, ques=ques, a=a, b=b, c=c, d=d, correct_answer=correct_answer,
+                               answers=[], test_no=test_no)
+    else:
+        return redirect(url_for("home", warn="You have already committed this exam. Check the results instead."))
 
 
 @app.route('/evaluate', methods=["GET", "POST"])
