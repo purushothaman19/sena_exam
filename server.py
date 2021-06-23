@@ -173,7 +173,7 @@ verified_emails = [mail.strip() for mail in student_mails.keys()]
 exam_sites = {
 
     "15": ["June 14, 2021 10:00:00", "June 14, 2021 13:30:00"],
-    "16": ["June 23, 2021 10:00:00", "June 23, 2021 17:30:00"]
+    "16": ["June 23, 2021 10:00:00", "June 23, 2021 22:30:00"]
 
 }
 
@@ -244,7 +244,7 @@ def home():
     warning = request.args.get("warn")
 
     if current_user.is_authenticated:
-        completed = Test15.query.filter_by(examinee_id=current_user.user_id).first()
+        completed = Test16.query.filter_by(examinee_id=current_user.user_id).first()
 
         if request.args.get("fee"):
             name = request.args.get("name")
@@ -256,7 +256,7 @@ def home():
 
         else:
             if completed:
-                completed = Test15.query.filter_by(examinee_id=current_user.user_id).first()
+                completed = Test16.query.filter_by(examinee_id=current_user.user_id).first()
                 return render_template("index.html", warning=warning, completed=completed)
 
             else:
