@@ -161,11 +161,7 @@ student_mails = {
     "matheshsethu22@gmail.com": ["Mathesh", 4000],
     "nagarajnkarthika@gmail.com": ["Karthika", 2000],
     "keviraj482@gmail.com": ["Yogesh", 2000],
-    "christyjeslina98@gmail.com": ["Christy", 3500],
-    "vhnu778@gmail.com": ["Vishnu", 7000],
-    "krish.16491@gmail.com": ["Krishnaveni", 7000]
-    
-
+    "christyjeslina98@gmail.com": ["Christy", 3500]
 }
 
 verified_emails = [mail.strip() for mail in student_mails.keys()]
@@ -173,7 +169,7 @@ verified_emails = [mail.strip() for mail in student_mails.keys()]
 exam_sites = {
 
     "15": ["June 14, 2021 10:00:00", "June 14, 2021 13:30:00"],
-    "16": ["June 23, 2021 10:00:00", "June 23, 2021 22:30:00"]
+    "16": ["June 21, 2021 10:00:00", "June 21, 2021 13:30:00"]
 
 }
 
@@ -244,7 +240,7 @@ def home():
     warning = request.args.get("warn")
 
     if current_user.is_authenticated:
-        completed = Test16.query.filter_by(examinee_id=current_user.user_id).first()
+        completed = Test15.query.filter_by(examinee_id=current_user.user_id).first()
 
         if request.args.get("fee"):
             name = request.args.get("name")
@@ -256,7 +252,7 @@ def home():
 
         else:
             if completed:
-                completed = Test16.query.filter_by(examinee_id=current_user.user_id).first()
+                completed = Test15.query.filter_by(examinee_id=current_user.user_id).first()
                 return render_template("index.html", warning=warning, completed=completed)
 
             else:
@@ -306,7 +302,7 @@ def register():
                                         bending=student_mails[request.form.get('email')][1]))
 
             else:
-                return redirect(url_for('home', warn="You are not authorised to use this website."))
+                return redirect(url_for('home', warn=True))
 
     return render_template("register.html", form=form)
 
