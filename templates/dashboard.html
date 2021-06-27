@@ -37,7 +37,7 @@
        {% for record in all_record %}
           <tbody>
             <tr>
-                {% if record.examinee_name != "Purushothaman Ganesan" %}
+<!--                {% if record.examinee_name != "Purushothaman Ganesan" %}-->
               <th scope="row">{{ i.value + 1 }}</th>
               <td>{{ record.examinee_name }}</td>
               <td>{{ record.marks }}</td>
@@ -47,7 +47,7 @@
           {% set i.value = i.value + 1 %}
 
         </tbody>
-        {% endfor %}
+<!--        {% endfor %}-->
 
     </table>
 
