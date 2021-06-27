@@ -33,15 +33,14 @@
 <!--        </tbody>-->
 <!--        {% endfor %}-->
 
-        {{ all_record }}
 
         {% set i = namespace(value=0) %}
        {% for record in all_record %}
           <tbody>
             <tr>
 
-     {% if record.examinee_name == "Purushothaman Ganesan" %}
-              <th scope="row">{{ i.value + 1 }}</th>
+     {% if record.examinee_name != "Purushothaman Ganesan" %}
+              <th scope="row">{{ i.value }}</th>
               <td>{{ record.examinee_name }}</td>
               <td>{{ record.marks }}</td>
               <td>{{ record.date }}</td>
