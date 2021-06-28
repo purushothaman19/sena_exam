@@ -365,7 +365,7 @@ def evaluate():
 
     for j in range(len(correct_answer)):
 
-        if answers[j] == correct_answer[j]:
+        if answers[j].strip() == correct_answer[j].strip():
             marks += 1
             final_result.append("Correct")
 
@@ -379,7 +379,9 @@ def evaluate():
 
     # return f"{correct_answer, answers}"
     # return f"{[s_answers for s_answers in correct_answer]}"
-    return f"{[s_answers for s_answers in answers]}"
+    # return f"{[s_answers for s_answers in answers]}"
+
+    return f"{final_result}"
 
     actual_time = datetime.datetime.now()
     s_time = actual_time.strftime('%Y-%m-%d %H:%M:%S.%f')
