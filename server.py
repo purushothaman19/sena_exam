@@ -372,10 +372,12 @@ def evaluate():
         else:
             final_result.append("Wrong")
 
-    return f"{final_result, answers, correct_answer}"
+    # return f"{final_result, answers, correct_answer}"
 
     st_answers = '#||#'.join(answers)
     f_result = "#||#".join(final_result)
+
+    return f"{st_answers}"
 
     actual_time = datetime.datetime.now()
     s_time = actual_time.strftime('%Y-%m-%d %H:%M:%S.%f')
