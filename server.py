@@ -183,7 +183,7 @@ exam_sites = {
 
     "15": ["June 14, 2021 10:00:00", "June 14, 2021 13:30:00"],
     "16": ["June 21, 2021 10:00:00", "June 21, 2021 13:30:00"],
-    "17": ["June 28, 2021 10:00:00", "June 28, 2021 13:30:00"],
+    "17": ["June 28, 2021 10:00:00", "June 28, 2021 22:30:00"],
 
 }
 
@@ -389,8 +389,8 @@ def evaluate():
         examinee_name=current_user.username
     )
 
-    db.session.add(new_examinee)
-    db.session.commit()
+    # db.session.add(new_examinee)
+    # db.session.commit()
 
     return redirect(url_for('home', warn="You have successfully completed the exam. Click results to see results."))
 
