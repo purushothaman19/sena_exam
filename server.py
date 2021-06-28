@@ -365,7 +365,7 @@ def evaluate():
 
     for j in range(len(correct_answer)):
 
-        if answers[j].strip() == correct_answer[j].strip():
+        if answers[j] == correct_answer[j]:
             marks += 1
             final_result.append("Correct")
 
