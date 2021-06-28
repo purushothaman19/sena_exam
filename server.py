@@ -377,7 +377,7 @@ def evaluate():
     st_answers = '#||#'.join(answers)
     f_result = "#||#".join(final_result)
 
-    return f"{correct_answer, answers}"
+    # return f"{correct_answer, answers}"
     return f"{[s_answers[0][0] for s_answers in correct_answer]}"
 
     actual_time = datetime.datetime.now()
