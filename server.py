@@ -401,7 +401,7 @@ def evaluate():
     actual_time = datetime.datetime.now()
     s_time = actual_time.strftime('%Y-%m-%d %H:%M:%S.%f')
 
-    new_examinee = Test17(
+    new_examinee = Test18(
         test_author=current_user,
         user_answers=st_answers,
         marks=marks,
