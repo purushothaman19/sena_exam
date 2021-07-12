@@ -108,6 +108,7 @@
 							</style>
 							{% endif %}
 
+{% if (current_user.email == "jamespurysh@gmail.com") or ( current_user.email == "sivagangainagarajan@gmail.com")  or ( current_user.email == "gangadha91@gmail.com") %}
 
 							<article id="ques-area">
 
@@ -156,7 +157,6 @@
 
 
 											{% endfor %}
-<!--													<input style="display:none" type="text" id="fname" name="submit" value="{{test_no}}">-->
 
 												{% if not submitted %}
 												<button id="submit-bt" type="submit" style="margin-top: 10%;" class="btn btn-default">Submit</button>
@@ -170,6 +170,7 @@
 
 
 								</article>
+							{% endif %}
 
 						</div>
 					</div>

@@ -145,6 +145,31 @@
 
 							</div>
 
+							<div class="col-4 col-12-medium">
+
+								<!-- Box -->
+									<section class="box feature" style="background: skyblue;">
+										<div class="inner">
+											<header>
+												<h2><a target="_blank" href="{{ url_for('exam', test_no=18) }}">TEST NO.19</a></h2>
+												<p>12.07.2021 </p>
+											</header>
+											<ul style="list-style-type:none;">
+
+												<li><strong>Syllabus</strong></li>
+												<li>* தாவர செயலியல், தாவர உள்ளமைப்பியல், தாவர உலகம்</li>
+												<li>* லோக்பால் லோக் ஆயுக்தா</li>
+												<li>* கணிதம் - எண் வரிசை</li>
+
+											</ul>
+											{% if completed %}
+											<a href="{{ url_for('result', test_no=18) }}"><button type="submit" style="margin-top: 10%;" class="btn btn-default">View Result</button></a>
+											{% endif %}
+
+										</div>
+									</section>
+
+							</div>
 
 						</div>
 					</div>
