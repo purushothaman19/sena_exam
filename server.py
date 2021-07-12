@@ -387,7 +387,7 @@ def evaluate():
     final_result = []
     marks = 0
 
-    for i in range(0, 200):
+    for i in range(0, len(sl_no)):
         user_answer = request.form[f'answers{i}']
 
         if user_answer is None:
