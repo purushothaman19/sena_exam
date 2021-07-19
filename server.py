@@ -367,9 +367,9 @@ def login():
 def exam():
     global attended
     test_no = request.args.get("test_no")
-    opentime = exam_sites[request.args.get("test_no")][0]
-    closetime = exam_sites[request.args.get("test_no")][1]
-    #
+    opentime = exam_sites[test_no][0]
+    closetime = exam_sites[test_no][1]
+
     # if test_no == "15":
     #     attended = Test15.query.filter_by(examinee_id=current_user.user_id).first()
 
