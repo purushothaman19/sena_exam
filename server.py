@@ -129,7 +129,7 @@ class Test19(db.Model):
 
 
 class Test20(db.Model):
-    __tablename__ = "Test_19"
+    __tablename__ = "Test_20"
     user_id = db.Column(db.Integer, primary_key=True)
     examinee_id = db.Column(db.Integer, db.ForeignKey("User.user_id"))
     test_author = relationship("User", back_populates="test20")
