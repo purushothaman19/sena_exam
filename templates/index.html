@@ -8,6 +8,8 @@
 					}
 			</style>
 
+{% if (current_user.email == "jamespurysh@gmail.com") or ( current_user.email == "sivagangainagarajan@gmail.com")  or ( current_user.email == "gangadha91@gmail.com") %}
+
 			<!-- Banner -->
 				<div id="banner-wrapper">
 					<div id="banner" class="box container">
@@ -158,6 +160,31 @@
 												<li>* தாவர செயலியல், தாவர உள்ளமைப்பியல், தாவர உலகம்</li>
 												<li>* லோக்பால் லோக் ஆயுக்தா</li>
 												<li>* கணிதம் - எண் வரிசை</li>
+
+											</ul>
+											<a href="{{ url_for('result', test_no=19) }}"><button type="submit" style="margin-top: 10%;" class="btn btn-default">View Result</button></a>
+
+										</div>
+									</section>
+
+							</div>
+
+							<div class="col-4 col-12-medium">
+
+								<!-- Box -->
+									<section class="box feature" style="background: skyblue;">
+										<div class="inner">
+											<header>
+												<h2><a target="_blank" href="{{ url_for('exam', test_no=19) }}">TEST NO.20</a></h2>
+												<p>19.07.2021 </p>
+											</header>
+											<ul style="list-style-type:none;">
+
+												<li><strong>Syllabus</strong></li>
+												<li>* இந்திய சமூக பண்பாட்டு வரலாற்றில் மாற்றங்களும் , தொடர்ச்சியும் : இந்திய பண்பாடும் சமயங்களும்.</li>
+												<li>* வருவாய் ஆதாரங்கள்</li>
+												<li>* தமிழகத்தின் பொருளாதார போக்குகள்</li>
+												<li>* கணிதம் : வயது கணக்கு</li>
 
 											</ul>
 											{% if completed %}
@@ -311,6 +338,8 @@
 
 <!--	</body>-->
 <!--</html>-->
+
+{% endif %}
 
 {% include "footer.html" %}
 {% endblock %}
