@@ -58,7 +58,7 @@ class User(UserMixin, db.Model):
     email = db.Column(db.String(100), unique=True)
     password = db.Column(db.String(100))
     username = db.Column(db.String(100))
-    test = relationship("Test15", back_populates="test_author")
+    # test = relationship("Test15", back_populates="test_author")
     test16 = relationship("Test16", back_populates="test_author")
     test17 = relationship("Test17", back_populates="test_author")
     test18 = relationship("Test18", back_populates="test_author")
