@@ -69,15 +69,15 @@ class User(UserMixin, db.Model):
         return self.user_id
 
 
-class Test15(db.Model):
-    __tablename__ = "Test_15"
-    user_id = db.Column(db.Integer, primary_key=True)
-    examinee_id = db.Column(db.Integer, db.ForeignKey("User.user_id"))
-    test_author = relationship("User", back_populates="test")
-    marks = db.Column(db.Integer)
-    user_answers = db.Column(db.String())
-    final_result = db.Column(db.String())
-    date = db.Column(db.String(250), nullable=False)
+# class Test15(db.Model):
+#     __tablename__ = "Test_15"
+#     user_id = db.Column(db.Integer, primary_key=True)
+#     examinee_id = db.Column(db.Integer, db.ForeignKey("User.user_id"))
+#     test_author = relationship("User", back_populates="test")
+#     marks = db.Column(db.Integer)
+#     user_answers = db.Column(db.String())
+#     final_result = db.Column(db.String())
+#     date = db.Column(db.String(250), nullable=False)
 
 
 class Test16(db.Model):
