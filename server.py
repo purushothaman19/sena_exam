@@ -143,7 +143,7 @@ class Test20(db.Model):
     
 
 class Test21(db.Model):
-    __tablename__ = "Test_20"
+    __tablename__ = "Test_21"
     user_id = db.Column(db.Integer, primary_key=True)
     examinee_id = db.Column(db.Integer, db.ForeignKey("User.user_id"))
     test_author = relationship("User", back_populates="test21")
@@ -521,7 +521,7 @@ def result():
         marks = attended_student.marks
         time = attended_student.date
 
-     elif test_no == "21":
+    elif test_no == "21":
         attended_student = Test21.query.filter_by(examinee_id=current_user.user_id).first()
 
         answers = attended_student.user_answers.split('#||#')
