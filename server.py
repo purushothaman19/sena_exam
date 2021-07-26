@@ -59,11 +59,12 @@ class User(UserMixin, db.Model):
     password = db.Column(db.String(100))
     username = db.Column(db.String(100))
     # test = relationship("Test15", back_populates="test_author")
-    test16 = relationship("Test16", back_populates="test_author")
+#     test16 = relationship("Test16", back_populates="test_author")
     test17 = relationship("Test17", back_populates="test_author")
     test18 = relationship("Test18", back_populates="test_author")
     test19 = relationship("Test19", back_populates="test_author")
     test20 = relationship("Test20", back_populates="test_author")
+    test21 = relationship("Test21", back_populates="test_author")
 
     def get_id(self):
         return self.user_id
@@ -80,16 +81,16 @@ class User(UserMixin, db.Model):
 #     date = db.Column(db.String(250), nullable=False)
 
 
-class Test16(db.Model):
-    __tablename__ = "Test_16"
-    user_id = db.Column(db.Integer, primary_key=True)
-    examinee_id = db.Column(db.Integer, db.ForeignKey("User.user_id"))
-    test_author = relationship("User", back_populates="test16")
-    marks = db.Column(db.Integer)
-    examinee_name = db.Column(db.String())
-    user_answers = db.Column(db.String())
-    final_result = db.Column(db.String())
-    date = db.Column(db.String(250), nullable=False)
+# class Test16(db.Model):
+#     __tablename__ = "Test_16"
+#     user_id = db.Column(db.Integer, primary_key=True)
+#     examinee_id = db.Column(db.Integer, db.ForeignKey("User.user_id"))
+#     test_author = relationship("User", back_populates="test16")
+#     marks = db.Column(db.Integer)
+#     examinee_name = db.Column(db.String())
+#     user_answers = db.Column(db.String())
+#     final_result = db.Column(db.String())
+#     date = db.Column(db.String(250), nullable=False)
 
 
 class Test17(db.Model):
@@ -133,6 +134,19 @@ class Test20(db.Model):
     user_id = db.Column(db.Integer, primary_key=True)
     examinee_id = db.Column(db.Integer, db.ForeignKey("User.user_id"))
     test_author = relationship("User", back_populates="test20")
+    marks = db.Column(db.Integer)
+    examinee_name = db.Column(db.String())
+    user_answers = db.Column(db.String())
+    final_result = db.Column(db.String())
+    date = db.Column(db.String(250), nullable=False)
+    
+    
+
+class Test21(db.Model):
+    __tablename__ = "Test_20"
+    user_id = db.Column(db.Integer, primary_key=True)
+    examinee_id = db.Column(db.Integer, db.ForeignKey("User.user_id"))
+    test_author = relationship("User", back_populates="test21")
     marks = db.Column(db.Integer)
     examinee_name = db.Column(db.String())
     user_answers = db.Column(db.String())
@@ -227,6 +241,7 @@ exam_sites = {
     "18": ["July 05, 2021 10:00:00", "July 05, 2021 13:30:00"],
     "19": ["July 12, 2021 10:00:00", "July 12, 2021 13:30:00"],
     "20": ["July 19, 2021 10:00:00", "July 19, 2021 14:00:00"],
+    "21": ["July 26, 2021 10:00:00", "July 26, 2021 13:40:00"],
 
 }
 
@@ -263,7 +278,7 @@ def home():
     warning = request.args.get("warn")
 
     if current_user.is_authenticated:
-        completed = Test20.query.filter_by(examinee_id=current_user.user_id).first()
+        completed = Test21.query.filter_by(examinee_id=current_user.user_id).first()
 
         if request.args.get("fee"):
             name = request.args.get("name")
@@ -373,8 +388,8 @@ def exam():
     # if test_no == "15":
     #     attended = Test15.query.filter_by(examinee_id=current_user.user_id).first()
 
-    if test_no == "16":
-        attended = Test16.query.filter_by(examinee_id=current_user.user_id).first()
+#     if test_no == "16":
+#         attended = Test16.query.filter_by(examinee_id=current_user.user_id).first()
 
     elif test_no == "17":
         attended = Test17.query.filter_by(examinee_id=current_user.user_id).first()
@@ -387,6 +402,9 @@ def exam():
 
     elif test_no == "20":
         attended = Test20.query.filter_by(examinee_id=current_user.user_id).first()
+        
+    elif test_no == "21":
+        attended = Test21.query.filter_by(examinee_id=current_user.user_id).first()
 
     if attended is None:
         return render_template("exam.html", opentime=json.dumps(opentime), closetime=json.dumps(closetime),
@@ -435,7 +453,7 @@ def evaluate():
     actual_time = datetime.datetime.now()
     s_time = actual_time.strftime('%Y-%m-%d %H:%M:%S.%f')
 
-    new_examinee = Test20(
+    new_examinee = Test21(
         test_author=current_user,
         user_answers=st_answers,
         marks=marks,
@@ -503,13 +521,21 @@ def result():
         marks = attended_student.marks
         time = attended_student.date
 
+     elif test_no == "21":
+        attended_student = Test21.query.filter_by(examinee_id=current_user.user_id).first()
+
+        answers = attended_student.user_answers.split('#||#')
+        final_result = attended_student.final_result.split('#||#')
+        marks = attended_student.marks
+        time = attended_student.date
+        
     return render_template("results.html", answers=answers, marks=marks, sl_no=sl_no, ques=ques, a=a, b=b, c=c, d=d,
                            correct_answer=correct_answer, final_result=final_result, time=time)
 
 
 @app.route("/dashboard")
 def dashboard():
-    all_record = Test20.query.all()
+    all_record = Test21.query.all()
 
     return render_template("dashboard.html", all_record=all_record)
 
