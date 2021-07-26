@@ -60,7 +60,7 @@ class User(UserMixin, db.Model):
     username = db.Column(db.String(100))
     # test = relationship("Test15", back_populates="test_author")
 #     test16 = relationship("Test16", back_populates="test_author")
-    test17 = relationship("Test17", back_populates="test_author")
+#     test17 = relationship("Test17", back_populates="test_author")
     test18 = relationship("Test18", back_populates="test_author")
     test19 = relationship("Test19", back_populates="test_author")
     test20 = relationship("Test20", back_populates="test_author")
@@ -93,16 +93,16 @@ class User(UserMixin, db.Model):
 #     date = db.Column(db.String(250), nullable=False)
 
 
-class Test17(db.Model):
-    __tablename__ = "Test_17"
-    user_id = db.Column(db.Integer, primary_key=True)
-    examinee_id = db.Column(db.Integer, db.ForeignKey("User.user_id"))
-    test_author = relationship("User", back_populates="test17")
-    marks = db.Column(db.Integer)
-    examinee_name = db.Column(db.String())
-    user_answers = db.Column(db.String())
-    final_result = db.Column(db.String())
-    date = db.Column(db.String(250), nullable=False)
+# class Test17(db.Model):
+#     __tablename__ = "Test_17"
+#     user_id = db.Column(db.Integer, primary_key=True)
+#     examinee_id = db.Column(db.Integer, db.ForeignKey("User.user_id"))
+#     test_author = relationship("User", back_populates="test17")
+#     marks = db.Column(db.Integer)
+#     examinee_name = db.Column(db.String())
+#     user_answers = db.Column(db.String())
+#     final_result = db.Column(db.String())
+#     date = db.Column(db.String(250), nullable=False)
 
 
 class Test18(db.Model):
@@ -391,10 +391,10 @@ def exam():
 #     if test_no == "16":
 #         attended = Test16.query.filter_by(examinee_id=current_user.user_id).first()
 
-    if test_no == "17":
-        attended = Test17.query.filter_by(examinee_id=current_user.user_id).first()
+#     if test_no == "17":
+#         attended = Test17.query.filter_by(examinee_id=current_user.user_id).first()
 
-    elif test_no == "18":
+    if test_no == "18":
         attended = Test18.query.filter_by(examinee_id=current_user.user_id).first()
 
     elif test_no == "19":
@@ -405,6 +405,9 @@ def exam():
         
     elif test_no == "21":
         attended = Test21.query.filter_by(examinee_id=current_user.user_id).first()
+        
+    else:
+        return redirect(url_for("home", warn="Sorry the results are no longer available!"))
 
     if attended is None:
         return render_template("exam.html", opentime=json.dumps(opentime), closetime=json.dumps(closetime),
