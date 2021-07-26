@@ -391,7 +391,7 @@ def exam():
 #     if test_no == "16":
 #         attended = Test16.query.filter_by(examinee_id=current_user.user_id).first()
 
-    elif test_no == "17":
+    if test_no == "17":
         attended = Test17.query.filter_by(examinee_id=current_user.user_id).first()
 
     elif test_no == "18":
