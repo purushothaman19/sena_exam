@@ -428,8 +428,8 @@ def exam():
     elif test_no == "22":
         attended = Test22.query.filter_by(examinee_id=current_user.user_id).first()
 
-    # else:
-    #     return redirect(url_for("home", warn="Sorry the results are no longer available!"))
+    else:
+        return redirect(url_for("home", warn=f"The Test number {test_no} is not available!"))
 
     if attended is None:
         return render_template("exam.html", opentime=json.dumps(opentime), closetime=json.dumps(closetime),
@@ -522,7 +522,7 @@ def result():
         attended_student = Test22.query.filter_by(examinee_id=current_user.user_id).first()
 
     else:
-        return redirect(url_for('home', warn="You did not attend the Test that you had selected!"))
+        return redirect(url_for('home', warn="The result for the exam that you had selected is no longer available"))
 
     answers = attended_student.user_answers.split('#||#')
     final_result = attended_student.final_result.split('#||#')
