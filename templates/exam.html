@@ -43,12 +43,13 @@
 							return false;
 						};
 
-					function myFunction() {
-					  document.getElementById("demo").innerHTML = "Hello World";
-					}
-
 					var countDownDate = new Date( {{ closetime|safe }} ).getTime();
 					var openCountDownDate = new Date( {{ opentime|safe }} ).getTime();
+					var submit_btn = document.getElementById("submit-bt");
+
+					function myFunction() {
+					  submit_btn.attr("disabled", true);
+					}
 
 					var x = setInterval(function() {
 
@@ -56,7 +57,6 @@
 
 					  var distance = countDownDate - now;
 					  var openDistance = openCountDownDate - now;
-					  var submit_btn = document.getElementById("submit-bt");
 
 					  // closing time
 					  var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
