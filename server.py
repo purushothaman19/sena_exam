@@ -404,19 +404,19 @@ def exam():
     opentime = exam_sites[test_no][0]
     closetime = exam_sites[test_no][1]
 
-    if test_no == "15":
-        attended = Test15.query.filter_by(examinee_id=current_user.user_id).first()
+    # if test_no == "15":
+    #     attended = Test15.query.filter_by(examinee_id=current_user.user_id).first()
+    #
+    # elif test_no == "16":
+    #         attended = Test16.query.filter_by(examinee_id=current_user.user_id).first()
+    #
+    # elif test_no == "17":
+    #         attended = Test17.query.filter_by(examinee_id=current_user.user_id).first()
+    #
+    # elif test_no == "18":
+    #     attended = Test18.query.filter_by(examinee_id=current_user.user_id).first()
 
-    elif test_no == "16":
-            attended = Test16.query.filter_by(examinee_id=current_user.user_id).first()
-
-    elif test_no == "17":
-            attended = Test17.query.filter_by(examinee_id=current_user.user_id).first()
-
-    elif test_no == "18":
-        attended = Test18.query.filter_by(examinee_id=current_user.user_id).first()
-
-    elif test_no == "19":
+    if test_no == "19":
         attended = Test19.query.filter_by(examinee_id=current_user.user_id).first()
 
     elif test_no == "20":
@@ -497,19 +497,19 @@ def result():
     global answers, final_result, time, marks
     test_no = request.args.get("test_no")
 
-    if test_no == "15":
-        attended_student = Test15.query.filter_by(examinee_id=current_user.user_id).first()
+    # if test_no == "15":
+    #     attended_student = Test15.query.filter_by(examinee_id=current_user.user_id).first()
+    #
+    # elif test_no == "16":
+    #     attended_student = Test16.query.filter_by(examinee_id=current_user.user_id).first()
+    #
+    # elif test_no == "17":
+    #     attended_student = Test17.query.filter_by(examinee_id=current_user.user_id).first()
+    #
+    # elif test_no == "18":
+    #     attended_student = Test18.query.filter_by(examinee_id=current_user.user_id).first()
 
-    elif test_no == "16":
-        attended_student = Test16.query.filter_by(examinee_id=current_user.user_id).first()
-
-    elif test_no == "17":
-        attended_student = Test17.query.filter_by(examinee_id=current_user.user_id).first()
-
-    elif test_no == "18":
-        attended_student = Test18.query.filter_by(examinee_id=current_user.user_id).first()
-
-    elif test_no == "19":
+    if test_no == "19":
         attended_student = Test19.query.filter_by(examinee_id=current_user.user_id).first()
 
     elif test_no == "20":
