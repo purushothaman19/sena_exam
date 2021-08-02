@@ -47,10 +47,6 @@
 					var openCountDownDate = new Date( {{ opentime|safe }} ).getTime();
 					var submit_btn = document.getElementById("submit-bt");
 
-					function myFunction() {
-					  submit_btn.attr("disabled", "true");
-					}
-
 					var x = setInterval(function() {
 
 					  var now = new Date().getTime();
@@ -161,7 +157,7 @@
 											{% endfor %}
 
 												{% if not submitted %}
-												<button id="submit-bt" onclick="myFunction()" type="submit" style="margin-top: 10%;" class="btn btn-default">Submit</button>
+												<button id="submit-bt" onclick="this.style.display = 'None';" type="submit" style="margin-top: 10%;" class="btn btn-default">Submit</button>
 												{% endif %}
 
 											</form>
