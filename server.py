@@ -668,13 +668,13 @@ def result():
     elif test_no == "22":
         attended_student = Test22.query.filter_by(examinee_id=current_user.user_id).first()
 
+        answers = attended_student.user_answers.split('#||#')
+        final_result = attended_student.final_result.split('#||#')
+        marks = attended_student.marks
+        time = attended_student.date
+
     else:
         return redirect(url_for('home', warn="You did not attend the Test that you had selected!"))
-
-    answers = attended_student.user_answers.split('#||#')
-    final_result = attended_student.final_result.split('#||#')
-    marks = attended_student.marks
-    time = attended_student.date
 
     return render_template("results.html", answers=answers, marks=marks, sl_no=sl_no, ques=ques, a=a, b=b, c=c, d=d,
                            correct_answer=correct_answer, final_result=final_result, time=time)
