@@ -535,7 +535,7 @@ def result():
 
 @app.route("/dashboard")
 def dashboard():
-    all_record = Test21.query.all()
+    all_record = Test22.query.all()
 
     return render_template("dashboard.html", all_record=all_record)
 
