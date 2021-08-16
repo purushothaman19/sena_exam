@@ -269,6 +269,33 @@
 							</div>
 
 
+							<div class="col-4 col-12-medium">
+
+								<!-- Box -->
+									<section class="box feature" style="background: #FDEFEF;">
+										<div class="inner">
+											<header>
+												<h2><a target="_blank" href="{{ url_for('exam', test_no=24) }}">TEST NO.24</a></h2>
+												<p> 16.08.2021 </p>
+											</header>
+											<ul style="list-style-type:none;">
+
+												<li><strong>Syllabus</strong></li>
+												<li>* தமிழகத்தின் அரசியல் கட்சிகளின் பரிணாம வளர்ச்சி</li>
+												<li>* 19,20ம் நூற்றாண்டின் தமிழகத்தின் சமூக மாற்றங்கள்</li>
+												<li>* கணிதம் : LCM,HCF</li>
+											</ul>
+
+											{% if completed %}
+											<a href="{{ url_for('result', test_no=24) }}"><button type="submit" style="margin-top: 10%;" class="btn btn-default">View Result</button></a>
+											{% endif %}
+
+										</div>
+									</section>
+
+							</div>
+
+
 						</div>
 					</div>
 				</div>
