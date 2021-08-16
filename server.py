@@ -63,7 +63,7 @@ class User(UserMixin, db.Model):
     # test17 = relationship("Test17", back_populates="test_author")
     # test18 = relationship("Test18", back_populates="test_author")
     # test19 = relationship("Test19", back_populates="test_author")
-    test20 = relationship("Test20", back_populates="test_author")
+    # test20 = relationship("Test20", back_populates="test_author")
     test21 = relationship("Test21", back_populates="test_author")
     test22 = relationship("Test22", back_populates="test_author")
     test23 = relationship("Test23", back_populates="test_author")
