@@ -181,7 +181,7 @@ class Test23(db.Model):
 
 
 class Test24(db.Model):
-    __tablename__ = "Test_23"
+    __tablename__ = "Test_24"
     user_id = db.Column(db.Integer, primary_key=True)
     examinee_id = db.Column(db.Integer, db.ForeignKey("User.user_id"))
     test_author = relationship("User", back_populates="test24")
