@@ -132,16 +132,16 @@ class User(UserMixin, db.Model):
 #     date = db.Column(db.String(250), nullable=False)
 
 
-class Test20(db.Model):
-    __tablename__ = "Test_20"
-    user_id = db.Column(db.Integer, primary_key=True)
-    examinee_id = db.Column(db.Integer, db.ForeignKey("User.user_id"))
-    test_author = relationship("User", back_populates="test20")
-    marks = db.Column(db.Integer)
-    examinee_name = db.Column(db.String())
-    user_answers = db.Column(db.String())
-    final_result = db.Column(db.String())
-    date = db.Column(db.String(250), nullable=False)
+# class Test20(db.Model):
+#     __tablename__ = "Test_20"
+#     user_id = db.Column(db.Integer, primary_key=True)
+#     examinee_id = db.Column(db.Integer, db.ForeignKey("User.user_id"))
+#     test_author = relationship("User", back_populates="test20")
+#     marks = db.Column(db.Integer)
+#     examinee_name = db.Column(db.String())
+#     user_answers = db.Column(db.String())
+#     final_result = db.Column(db.String())
+#     date = db.Column(db.String(250), nullable=False)
 
 
 class Test21(db.Model):
@@ -441,10 +441,10 @@ def exam():
     # if test_no == "19":
     #     attended = Test19.query.filter_by(examinee_id=current_user.user_id).first()
 
-    if test_no == "20":
-        attended = Test20.query.filter_by(examinee_id=current_user.user_id).first()
+    # if test_no == "20":
+    #     attended = Test20.query.filter_by(examinee_id=current_user.user_id).first()
 
-    elif test_no == "21":
+    if test_no == "21":
         attended = Test21.query.filter_by(examinee_id=current_user.user_id).first()
 
     elif test_no == "22":
@@ -540,10 +540,10 @@ def result():
     # if test_no == "19":
     #     attended_student = Test19.query.filter_by(examinee_id=current_user.user_id).first()
 
-    if test_no == "20":
-        attended_student = Test20.query.filter_by(examinee_id=current_user.user_id).first()
+    # if test_no == "20":
+    #     attended_student = Test20.query.filter_by(examinee_id=current_user.user_id).first()
 
-    elif test_no == "21":
+    if test_no == "21":
         attended_student = Test21.query.filter_by(examinee_id=current_user.user_id).first()
 
     elif test_no == "22":
